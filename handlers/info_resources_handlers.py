@@ -28,7 +28,7 @@ async def process_back_answer(message: Message):
 @router_ih.message(Text(text=LEXICON_RU['button_no_info']))
 async def process_stop_info_answer(message: Message):
     if message.from_user.id in users_data:
-        await info_resources.edit_text(text=LEXICON_RU['no_text'], reply_markup=ReplyKeyboardRemove())
+        await message.answer(text=LEXICON_RU['no_text'], reply_markup=ReplyKeyboardRemove())
     else:
         await message.answer(text='Отправьте команду /start')
 

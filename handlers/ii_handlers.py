@@ -13,4 +13,4 @@ async def process_i_i_answer(message: Message):
         bot_writes = await message.answer(text='Печатаю...')
         await bot_writes.edit_text(text=chat_gpt(message.text))
     except:
-        await message.answer(text="Ой, что-то я закипел...")
+        await message.answer(text='Ой, что-то я устал, пойду, прилягу...')
