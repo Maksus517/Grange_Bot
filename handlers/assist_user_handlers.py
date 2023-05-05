@@ -6,7 +6,7 @@ import os
 from lexicon import LEXICON_RU
 from data import users_data
 from filters import FilterMessageMp3, FilterOpenAi
-from services import message_to_mp3, chat_gpt
+from services import message_to_mp3
 from keyboards import support_keyboard, assist_keyboard
 
 router_sh = Router()
@@ -16,13 +16,6 @@ router_sh = Router()
 async def process_message_mp3_answer(message: Message):
     users_data[message.from_user.id]['user_status'] = 'message_mp3'
     await message.answer(text=LEXICON_RU['message_mp3_answer'], ephemeral=True,
-                         reply_markup=assist_keyboard)
-
-
-@router_sh.message(Text(text=LEXICON_RU['chat_gpt']))
-async def process_chat_gpt_answer(message: Message):
-    users_data[message.from_user.id]['user_status'] = 'chat_gpt'
-    await message.answer(text=LEXICON_RU['chat_gpt_answer'], ephemeral=True,
                          reply_markup=assist_keyboard)
 
 
