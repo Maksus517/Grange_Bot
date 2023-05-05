@@ -18,7 +18,7 @@ async def process_start_command(message: Message):
         data_base.insert_user_data()
     await message.answer(text=f"<b>Привет, {message.from_user.first_name}! "
                               f"Я многофункциональный бот.</b>\n\n"
-                              f"Что бы начать вы можете воспользоваться:\n\n"
+                              f"Можете просто написать мне или воспользоваться:\n\n"
                               f"{LEXICON_RU['/start']}")
 
 

@@ -2,6 +2,7 @@ import requests
 
 from bs4 import BeautifulSoup as BS
 
+
 URL = 'https://www.anekdot.ru/last/good/'
 
 
