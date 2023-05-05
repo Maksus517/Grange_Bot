@@ -70,4 +70,3 @@ async def process_news_answer(message: Message):
 @router_ih.message(Text(text=LEXICON_RU['joke']))
 async def process_joke_answer(message: Message):
     await message.answer(text=random.choice(joke), reply_markup=info_keyboard)
-
