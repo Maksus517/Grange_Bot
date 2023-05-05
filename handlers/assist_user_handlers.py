@@ -47,12 +47,6 @@ async def process_send_mp3_answer(message: Message, bot: Bot):
     os.remove(f'voice from {message.from_user.id}.mp3')
 
 
-# Модуль ИИ
-@router_sh.message(FilterOpenAi(users_data))
-async def process_send_message_gpt_answer(message: Message):
-    await message.answer(text=chat_gpt(message.text), reply_markup=assist_keyboard)
-
-
 # Модуль выхода
 @router_sh.message(Text(text=LEXICON_RU['button_no_info']))
 async def process_stop_info_answer(message: Message):
