@@ -34,6 +34,7 @@ async def process_help_command(message: Message):
 async def process_info_command(message: Message):
     if message.from_user.id in users_data:
         await message.answer(text=LEXICON_RU['/info_resources'], reply_markup=info_keyboard)
+
     else:
         await message.answer(text='Отправьте команду /start')
 

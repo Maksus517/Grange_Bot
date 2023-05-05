@@ -42,8 +42,9 @@ async def process_wiki_answer(message: Message):
 
 @router_ih.message(FilterWiki(users_data))
 async def process_send_wiki_answer(message: Message):
-    await message.answer(text='Пожалуйста подождите')
-    await message.answer(text=get_wiki(message.text), reply_markup=assist_keyboard)
+    wait_wiki = await message.answer(text='Пожалуйста подождите...')
+    await wait_wiki.edit_text(text=get_wiki(message.text))
+    await message.answer(text=LEXICON_INFO_RU['wiki_answer'], reply_markup=assist_keyboard)
 
 
 # Блок погоды
