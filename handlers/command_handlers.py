@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.filters import Command, CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, FSInputFile, InputFile
 
 from lexicon import LEXICON_RU
 from keyboards import info_keyboard, support_keyboard, developers_keyboard
@@ -16,18 +16,22 @@ async def process_start_command(message: Message):
                                             'user_status': None, 'user_premium': False}
         data_base: DataBase = DataBase(message)
         data_base.insert_user_data()
-    await message.answer(text=f"<b>Привет, {message.from_user.first_name}! "
-                              f"Я многофункциональный бот.</b>\n\n"
-                              f"Я отвечаю на любые вопросы.\n"
-                              f"(для этого в тексте должно быть слово 'бот')\n\n"
-                              f"Можете мне написать или воспользоваться:\n\n"
-                              f"{LEXICON_RU['/start']}")
+    photo: FSInputFile = FSInputFile('start_bot.jpg')
+    await message.answer_photo(photo=photo,
+                               caption=f"<b>Привет, {message.from_user.first_name}! "
+                                       f"Я многофункциональный бот.</b>\n\n"
+                                       f"Я отвечаю на любые вопросы.\n"
+                                       f"(для этого в тексте должно быть слово 'бот')\n\n"
+                                       f"Можете мне написать или воспользоваться:\n\n"
+                                       f"{LEXICON_RU['/start']}")
 
 
 @router_ch.message(Command(commands=['help']))
 async def process_help_command(message: Message):
     if message.from_user.id in users_data:
-        await message.answer(text=LEXICON_RU['/help'])
+        photo: FSInputFile = FSInputFile('help_bot.gif')
+        await message.answer_photo(photo=photo,
+                                   caption=LEXICON_RU['/help'])
     else:
         await message.answer(text='Отправьте команду /start')
 
