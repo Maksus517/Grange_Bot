@@ -3,7 +3,8 @@ from aiogram.types import Message
 from config_data import load_config, Config
 
 users_data: dict[int, dict[str, str | int | bool | None]] = {}
-user_joke: dict[int, list] = {}
+user_joke: dict[int, list[str]] = {}
+joke_base: list[str] = []
 
 
 class DataBase:

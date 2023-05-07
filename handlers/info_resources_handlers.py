@@ -5,7 +5,7 @@ import random
 
 from lexicon import LEXICON_RU, LEXICON_INFO_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
-from data import users_data, user_joke
+from data import users_data, user_joke, joke_base
 from filters import FilterWiki, FilterOpenWeather
 from keyboards import info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard
 
@@ -82,13 +82,15 @@ async def process_news_press_button(callback: CallbackQuery):
 # Блок Анекдотов
 @router_ih.callback_query(Text(text=['joke']))
 async def process_joke_press_button(callback: CallbackQuery):
-    joke = joke_pars()
-    random.shuffle(joke)
-    user_joke[callback.from_user.id] = joke
     try:
-        await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
-                                         reply_markup=assist_joke_keyboard)
-        del user_joke[callback.from_user.id][0]
+        joke = joke_pars()
+        random.shuffle(joke)
+        user_joke[callback.from_user.id] = joke
+        if user_joke[callback.from_user.id][0] not in joke_base:
+            await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
+                                             reply_markup=assist_joke_keyboard)
+            joke_base.append(user_joke[callback.from_user.id][0])
+            del user_joke[callback.from_user.id][0]
     except Exception as ex:
         await callback.message.edit_text(text='Вы прочитали все анекдоты, попробуйте посмотреть позже...\n'
                                               '<b>Что-то еще?</b>',
@@ -99,9 +101,11 @@ async def process_joke_press_button(callback: CallbackQuery):
 @router_ih.callback_query(Text(text=['button_again_joke']))
 async def process_joke_press_button(callback: CallbackQuery):
     try:
-        await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
-                                         reply_markup=assist_joke_keyboard)
-        del user_joke[callback.from_user.id][0]
+        if user_joke[callback.from_user.id][0] not in joke_base:
+            await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
+                                             reply_markup=assist_joke_keyboard)
+            joke_base.append(user_joke[callback.from_user.id][0])
+            del user_joke[callback.from_user.id][0]
     except Exception as ex:
         await callback.message.edit_text(text='Вы прочитали все анекдоты, попробуйте посмотреть позже...\n'
                                               '<b>Что-то еще?</b>',
