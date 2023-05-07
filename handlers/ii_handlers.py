@@ -8,7 +8,7 @@ from services import chat_gpt
 router_ii: Router = Router()
 
 
-@router_ii.message(Text(contains='бот', ignore_case=True))
+@router_ii.message()
 async def process_i_i_answer(message: Message):
     try:
         bot_writes = await message.answer(text='Печатаю...')

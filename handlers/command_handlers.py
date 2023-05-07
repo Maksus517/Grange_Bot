@@ -21,8 +21,7 @@ async def process_start_command(message: Message):
                                caption=f"<b>Привет, {message.from_user.first_name}! "
                                        f"Я многофункциональный бот.</b>\n\n"
                                        f"Я отвечаю на любые вопросы.\n"
-                                       f"(для этого в тексте должно быть слово 'бот')\n\n"
-                                       f"Можете мне написать или воспользоваться:\n\n"
+                                       f"Можете мне написать или воспользоваться командами:\n\n"
                                        f"{LEXICON_RU['/start']}")
 
 
