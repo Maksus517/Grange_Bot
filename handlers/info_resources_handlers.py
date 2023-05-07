@@ -86,11 +86,9 @@ async def process_joke_press_button(callback: CallbackQuery):
         joke = joke_pars()
         random.shuffle(joke)
         user_joke[callback.from_user.id] = joke
-        if user_joke[callback.from_user.id][0] not in joke_base:
-            await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
-                                             reply_markup=assist_joke_keyboard)
-            joke_base.append(user_joke[callback.from_user.id][0])
-            del user_joke[callback.from_user.id][0]
+        await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
+                                         reply_markup=assist_joke_keyboard)
+        del user_joke[callback.from_user.id][0]
     except Exception as ex:
         await callback.message.edit_text(text='Вы прочитали все анекдоты, попробуйте посмотреть позже...\n'
                                               '<b>Что-то еще?</b>',
@@ -101,11 +99,9 @@ async def process_joke_press_button(callback: CallbackQuery):
 @router_ih.callback_query(Text(text=['button_again_joke']))
 async def process_joke_press_button(callback: CallbackQuery):
     try:
-        if user_joke[callback.from_user.id][0] not in joke_base:
-            await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
-                                             reply_markup=assist_joke_keyboard)
-            joke_base.append(user_joke[callback.from_user.id][0])
-            del user_joke[callback.from_user.id][0]
+        await callback.message.edit_text(text=user_joke[callback.from_user.id][0],
+                                         reply_markup=assist_joke_keyboard)
+        del user_joke[callback.from_user.id][0]
     except Exception as ex:
         await callback.message.edit_text(text='Вы прочитали все анекдоты, попробуйте посмотреть позже...\n'
                                               '<b>Что-то еще?</b>',
