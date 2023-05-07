@@ -42,7 +42,7 @@ LEXICON_RU: dict[str, str] = {
 
 
 LEXICON_INFO_RU: dict[str, str] = {
-    'wiki_answer': 'Введите текст для запроса или нажмите кнопку назад',
+    'wiki_answer': 'Что вы хотите узнать?\nВведите текст:',
 
     'open_weather_answer': 'Напишите название города',
 

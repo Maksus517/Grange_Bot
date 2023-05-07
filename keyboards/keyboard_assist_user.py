@@ -14,11 +14,11 @@ support_keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(keyboard=[[button_me
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                          callback_data='button_back')
 
-button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='Ещё!',
-                                                               callback_data='button_again_wiki')
+button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='Ещё!',
+                                                               callback_data='button_again_joke')
 
 
 assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
 
-assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
+assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_joke],
                                                                                    [button_back]])
