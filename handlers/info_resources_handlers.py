@@ -5,9 +5,10 @@ import random
 
 from lexicon import LEXICON_RU, LEXICON_INFO_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
-from data import users_data, user_joke, joke_base
+from data import users_data, user_joke
 from filters import FilterWiki, FilterOpenWeather
-from keyboards import info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard
+from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
+                       assist_joke_keyboard, assist_open_weather_keyboard)
 
 router_ih = Router()
 
@@ -54,17 +55,28 @@ async def process_open_weather_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'open_weather'
     global open_weather_press_button
     open_weather_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['open_weather_answer'],
-                                                                 reply_markup=assist_keyboard)
+                                                                 reply_markup=open_weather_keyboard)
+
+
+@router_ih.callback_query(Text(text=['button_again_open_weather']))
+async def process_city_press_button(callback: CallbackQuery):
+    global open_weather_press_button
+    open_weather_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['open_weather_answer'],
+                                                                 reply_markup=open_weather_keyboard)
+
+
+@router_ih.callback_query(FilterOpenWeather(users_data))
+async def process_city_press_button(callback: CallbackQuery):
+    await callback.message.edit_text(text=get_weather(callback.data),
+                                     reply_markup=assist_open_weather_keyboard)
 
 
 @router_ih.message(FilterOpenWeather(users_data))
 async def process_open_weather_answer(message: Message):
     await open_weather_press_button.delete()
     wait_wiki = await message.answer(text='Пожалуйста подождите...')
-    await wait_wiki.edit_text(text=get_weather(message.text))
-    await message.answer(text='<b>Что-то еще?</b>',
-                         reply_markup=info_keyboard)
-    users_data[message.from_user.id]['user_status'] = None
+    await wait_wiki.edit_text(text=get_weather(message.text),
+                              reply_markup=assist_open_weather_keyboard)
 
 
 # Блок новостей
