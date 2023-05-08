@@ -63,3 +63,37 @@ open_weather_keyboard: InlineKeyboardMarkup = \
                                   [button_back]])
 
 
+button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                         callback_data='button_back')
+
+button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='Оставить ответ здесь',
+                                                                    callback_data='button_leave_here_wiki')
+
+button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='Ещё!',
+                                                               callback_data='button_again_joke')
+
+button_again_open_weather: InlineKeyboardButton = InlineKeyboardButton(text='Посмотреть погоду в другом городе',
+                                                                       callback_data='button_again_open_weather')
+
+button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='Да!',
+                                                               callback_data='button_again_wiki')
+
+
+assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
+
+assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_joke],
+                                                                                   [button_back],
+                                                                                   [button_no]])
+
+assist_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
+                                                                                           [button_back],
+                                                                                           [button_no]])
+
+assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
+                                                                                         [button_leave_here_wiki],
+                                                                                         [button_back],
+                                                                                         [button_no]])
+
+assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
+                                                                                   [button_back],
+                                                                                   [button_no]])

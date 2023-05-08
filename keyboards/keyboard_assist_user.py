@@ -9,22 +9,3 @@ button_no: KeyboardButton = KeyboardButton(text=LEXICON_RU['button_no_info'])
 support_keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(keyboard=[[button_message_mp3],
                                                                       [button_no]],
                                                             resize_keyboard=True)
-
-
-button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
-                                                         callback_data='button_back')
-
-button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='Ещё!',
-                                                               callback_data='button_again_joke')
-
-button_again_open_weather: InlineKeyboardButton = InlineKeyboardButton(text='Посмотреть погоду в другом городе',
-                                                                       callback_data='button_again_open_weather')
-
-
-assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
-
-assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_joke],
-                                                                                   [button_back]])
-
-assist_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
-                                                                                           [button_back]])
