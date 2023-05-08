@@ -6,7 +6,7 @@ import random
 from lexicon import LEXICON_RU, LEXICON_INFO_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
 from data import users_data, user_joke
-from filters import FilterWiki, FilterOpenWeather
+from filters import FilterWiki, FilterOpenWeather, FilterWikiError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
                        assist_joke_keyboard, assist_open_weather_keyboard,
                        assist_wiki_keyboard, assist_leave_wiki_keyboard,
@@ -45,24 +45,6 @@ async def process_wiki_button_press(callback: CallbackQuery):
     users_data[callback.from_user.id]['message_data'] = wiki_button_press
 
 
-@router_ih.message(FilterWiki(users_data))
-async def process_wiki_answer(message: Message):
-    await users_data[message.from_user.id]['message_data'].delete()
-    wait_wiki = await message.answer(text='Пожалуйста подождите...')
-    try:
-        wiki_answer = await wait_wiki.edit_text(text=get_wiki(message.text),
-                                                reply_markup=assist_leave_wiki_keyboard)
-        users_data[message.from_user.id]['message_data'] = wiki_answer
-        users_data[message.from_user.id]['user_status'] = None
-    except Exception as ex:
-        wiki_answer = await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
-                                                     f'Хотите узнать что-то еще?',
-                                                reply_markup=assist_wiki_keyboard)
-        users_data[message.from_user.id]['message_data'] = wiki_answer
-        users_data[message.from_user.id]['user_status'] = None
-        print(ex)
-
-
 @router_ih.callback_query(Text(text=['button_again_wiki']))
 async def process_again_wiki_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'wiki'
@@ -78,6 +60,39 @@ async def process_leave_here_wiki_press_button(callback: CallbackQuery):
     leave_here_wiki_press_button = await callback.message.answer(text='Хотите узнать что-то еще?',
                                                                  reply_markup=assist_wiki_keyboard)
     users_data[callback.from_user.id]['message_data'] = leave_here_wiki_press_button
+
+
+@router_ih.message(FilterWiki(users_data))
+async def process_wiki_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].delete()
+    wait_wiki = await message.answer(text='Пожалуйста подождите...')
+    try:
+        wiki_answer = await wait_wiki.edit_text(text=get_wiki(message.text),
+                                                reply_markup=assist_leave_wiki_keyboard)
+        users_data[message.from_user.id]['message_data'] = wiki_answer
+        users_data[message.from_user.id]['user_status'] = 'state_wiki'
+    except Exception as ex:
+        wiki_answer = await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о '
+                                                     f'{message.text}...\n'
+                                                     f'Хотите узнать что-то еще?',
+                                                reply_markup=assist_wiki_keyboard)
+        users_data[message.from_user.id]['message_data'] = wiki_answer
+        users_data[message.from_user.id]['user_status'] = 'state_wiki'
+        print(ex)
+
+
+@router_ih.message(FilterWikiError(users_data))
+async def process_wiki_error_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].delete()
+    wiki_error_answer = await message.answer(text='<b>Вы находитесь в блоке Википедии</b>\n'
+                                                  'Если хотите еще узнать какую-либо информацию из Википедии '
+                                                  'нажмите кнопку <b>"Еще!"</b>.\n'
+                                                  'Что бы выйти в информационный блок нажмите кнопку <b>"Назад"</b>.\n'
+                                                  'Если хотите завершить работу с информационным блоком '
+                                                  'нажмите кнопу <b>"Выход"</b>',
+                                             reply_markup=assist_wiki_keyboard)
+    users_data[message.from_user.id]['message_data'] = wiki_error_answer
+
 
 # -----Блок погоды-----
 
