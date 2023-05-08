@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardBut
 from lexicon import LEXICON_RU
 
 
-# Общие кнопки
+# -----Блок "общие кнопки"-----
 
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                          callback_data='button_back')
@@ -11,7 +11,7 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
 assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
 
 
-# Блок кнопок 'Инфо'
+# -----Блок кнопок "Инфо"-----
 
 button_wiki: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['wiki'],
                                                          callback_data='wikipedia')
@@ -26,7 +26,7 @@ info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[but
                                                                             [button_no]])
 
 
-# Блок кнопок 'Википедия'
+# -----Блок кнопок "Википедия"-----
 
 button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить ответ',
                                                                     callback_data='button_leave_here_wiki')
@@ -41,7 +41,7 @@ assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboar
                                                                                    [button_no]])
 
 
-# Блок кнопок 'Погода'
+# -----Блок кнопок "Погода"-----
 
 button_ow_1: InlineKeyboardButton = InlineKeyboardButton(text='Москва',
                                                          callback_data='Москва')
@@ -90,7 +90,7 @@ assist_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline
                                                                                            [button_no]])
 
 
-# Блок кнопок "Анекдоты"
+# -----Блок кнопок "Анекдоты"-----
 
 button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='✅ Ещё!',
                                                                callback_data='button_again_joke')
