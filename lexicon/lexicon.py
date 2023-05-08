@@ -44,7 +44,7 @@ LEXICON_RU: dict[str, str] = {
 LEXICON_INFO_RU: dict[str, str] = {
     'wiki_answer': 'Что вы хотите узнать?\nВведите текст:',
 
-    'open_weather_answer': 'Напишите название города',
+    'open_weather_answer': 'Выберете название города. Если вашего города нет в списке, напишите его в чат',
 
     'open_weather_more': 'В каком городе, вы еще хотите узнать погоду?',
 

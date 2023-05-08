@@ -5,7 +5,7 @@ import os
 
 from lexicon import LEXICON_RU
 from data import users_data
-from filters import FilterMessageMp3, FilterOpenAi
+from filters import FilterMessageMp3
 from services import message_to_mp3
 from keyboards import support_keyboard, assist_keyboard
 
@@ -20,12 +20,6 @@ async def process_message_mp3_answer(message: Message):
 
 
 @router_sh.message(Text(text=LEXICON_RU['button_back']), FilterMessageMp3(users_data))
-async def process_back_answer(message: Message):
-    await message.answer(text=LEXICON_RU['/assist_user'], reply_markup=support_keyboard)
-    users_data[message.from_user.id]['user_status'] = None
-
-
-@router_sh.message(Text(text=LEXICON_RU['button_back']), FilterOpenAi(users_data))
 async def process_back_answer(message: Message):
     await message.answer(text=LEXICON_RU['/assist_user'], reply_markup=support_keyboard)
     users_data[message.from_user.id]['user_status'] = None

@@ -44,6 +44,7 @@ async def process_info_command(message: Message):
         # await message.answer_photo(photo=photo,
         #                            caption=LEXICON_RU['/info_resources'],
         #                            reply_markup=info_keyboard)
+        users_data[message.from_user.id]['user_status'] = 'info'
     else:
         await message.answer(text='Отправьте команду /start')
 

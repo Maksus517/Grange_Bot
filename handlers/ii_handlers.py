@@ -2,9 +2,8 @@ from aiogram.types import Message, CallbackQuery
 from aiogram import Router
 
 from services import chat_gpt
-from filters import FilterChat
 from data import users_data
-
+from filters import FilterChat
 
 router_ii: Router = Router()
 

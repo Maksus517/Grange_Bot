@@ -30,10 +30,14 @@ info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[but
 
 button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить ответ',
                                                                     callback_data='button_leave_here_wiki')
-assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_leave_here_wiki],
+button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='✅ Eще!',
+                                                               callback_data='button_again_wiki')
+assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki,
+                                                                                          button_leave_here_wiki],
                                                                                          [button_back],
                                                                                          [button_no]])
-assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back],
+assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
+                                                                                   [button_back],
                                                                                    [button_no]])
 
 
@@ -81,9 +85,17 @@ open_weather_keyboard: InlineKeyboardMarkup = \
 
 button_again_open_weather: InlineKeyboardButton = InlineKeyboardButton(text='✅ Посмотреть погоду в другом городе',
                                                                        callback_data='button_again_open_weather')
-assist_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
-                                                                                           [button_back],
-                                                                                           [button_no]])
+button_leave_here_open_weather: InlineKeyboardButton = \
+    InlineKeyboardButton(text='📌 Закрепить ответ',
+                         callback_data='button_leave_here_open_weather')
+assist_open_weather_keyboard: InlineKeyboardMarkup = \
+    InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
+                                          [button_leave_here_open_weather],
+                                          [button_back],
+                                          [button_no]])
+leave_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
+                                                                                          [button_back],
+                                                                                          [button_no]])
 
 
 # -----Блок кнопок "Анекдоты"-----
