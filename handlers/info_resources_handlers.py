@@ -6,7 +6,7 @@ import random
 from lexicon import LEXICON_RU, LEXICON_INFO_RU, LEXICON_WIKI_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
 from data import users_data, user_joke
-from filters import FilterWiki, FilterOpenWeather, FilterWikiError
+from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterOpenWeatherError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
                        assist_joke_keyboard, assist_open_weather_keyboard,
                        assist_wiki_keyboard, assist_leave_wiki_keyboard,
@@ -15,7 +15,7 @@ from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
 router_ih = Router()
 
 
-# -----Ather handlers-----
+# -----Other handlers-----
 
 @router_ih.callback_query(Text(text=['button_back']))
 async def process_back_press_button(callback: CallbackQuery):
@@ -91,50 +91,59 @@ async def process_wiki_error_answer(message: Message):
 @router_ih.callback_query(Text(text=['open_weather']))
 async def process_open_weather_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'open_weather'
-    global open_weather_press_button
     open_weather_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['open_weather_answer'],
                                                                  reply_markup=open_weather_keyboard)
+    users_data[callback.from_user.id]['message_data'] = open_weather_press_button
 
 
 @router_ih.callback_query(Text(text=['button_again_open_weather']))
-async def process_city_press_button(callback: CallbackQuery):
+async def process_again_open_weather_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'open_weather'
-    global open_weather_press_button
-    open_weather_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['open_weather_answer'],
-                                                                 reply_markup=open_weather_keyboard)
-
-
-@router_ih.callback_query(FilterOpenWeather(users_data))
-async def process_city_press_button(callback: CallbackQuery):
-
-    await callback.message.edit_text(text=get_weather(callback.data),
-                                     reply_markup=assist_open_weather_keyboard)
-    users_data[callback.from_user.id]['user_status'] = None
-
-
-@router_ih.message(FilterOpenWeather(users_data))
-async def process_open_weather_answer(message: Message):
-    await open_weather_press_button.delete()
-    try:
-        wait_wiki = await message.answer(text='Пожалуйста подождите...')
-        await wait_wiki.edit_text(text=get_weather(message.text),
-                                  reply_markup=assist_open_weather_keyboard)
-        users_data[message.from_user.id]['user_status'] = None
-    except Exception as ex:
-        await wait_wiki.edit_text(text=f'Вы ввели неверное название города.'
-                                              f'Попробуем снова?',
-                                  reply_markup=leave_open_weather_keyboard)
-        users_data[message.from_user.id]['user_status'] = None
-        print(ex)
+    again_open_weather_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['open_weather_answer'],
+                                                                       reply_markup=open_weather_keyboard)
+    users_data[callback.from_user.id]['message_data'] = again_open_weather_press_button
 
 
 @router_ih.callback_query(Text(text=['button_leave_here_open_weather']))
 async def process_leave_here_wiki_press_button(callback: CallbackQuery):
     await callback.message.edit_text(text=callback.message.text,
                                      reply_markup=None)
-    await callback.message.answer(text='Оставлю прогноз тут, а то вдруг потеряется...\n'
-                                       'Что то еще?',
-                                  reply_markup=leave_open_weather_keyboard)
+    leave_here_wiki_press_button = await callback.message.answer(text='Оставлю прогноз тут, а то вдруг потеряется...\n'
+                                                                      'Что то еще?',
+                                                                 reply_markup=leave_open_weather_keyboard)
+    users_data[callback.from_user.id]['message_data'] = leave_here_wiki_press_button
+
+
+@router_ih.callback_query(FilterOpenWeather(users_data))
+async def process_city_press_button(callback: CallbackQuery):
+    await callback.message.edit_text(text=get_weather(callback.data),
+                                     reply_markup=assist_open_weather_keyboard)
+    users_data[callback.from_user.id]['user_status'] = 'state_open_weather'
+
+
+@router_ih.message(FilterOpenWeather(users_data))
+async def process_open_weather_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].delete()
+    try:
+        open_weather_answer = await message.answer(text='Пожалуйста подождите...')
+        users_data[message.from_user.id]['message_data'] = open_weather_answer
+        await users_data[message.from_user.id]['message_data'].edit_text(text=get_weather(message.text),
+                                                                         reply_markup=assist_open_weather_keyboard)
+        users_data[message.from_user.id]['user_status'] = 'state_open_weather'
+    except Exception as ex:
+        await users_data[message.from_user.id]['message_data'].edit_text(text=f'Вы ввели неверное название города.'
+                                                                              f'Попробуем снова?',
+                                                                         reply_markup=leave_open_weather_keyboard)
+        users_data[message.from_user.id]['user_status'] = 'state_open_weather'
+        print(ex)
+
+
+@router_ih.message(FilterOpenWeatherError(users_data))
+async def process_open_weather_error_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].delete()
+    open_weather_error_answer = await message.answer(text='Куку',
+                                                     reply_markup=leave_open_weather_keyboard)
+    users_data[message.from_user.id]['message_data'] = open_weather_error_answer
 
 
 # -----News handlers-----
