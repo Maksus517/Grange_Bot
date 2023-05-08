@@ -20,7 +20,7 @@ router_ih = Router()
 async def process_back_press_button(callback: CallbackQuery):
     await callback.message.edit_text(text='<b>Что-то еще?</b>',
                                      reply_markup=info_keyboard)
-    users_data[callback.from_user.id]['user_status'] = None
+    users_data[callback.from_user.id]['user_status'] = 'info'
 
 
 # -----Кнопка выхода-----
@@ -29,7 +29,7 @@ async def process_back_press_button(callback: CallbackQuery):
 async def process_stop_info_press_button(callback: CallbackQuery):
     if callback.from_user.id in users_data:
         await callback.message.edit_text(text=LEXICON_RU['no_text'])
-        users_data[callback.from_user.id]['user_status'] = None
+        users_data[callback.from_user.id]['user_status'] = 'Chat'
     else:
         await callback.answer(text='Отправьте команду /start')
 
@@ -51,12 +51,12 @@ async def process_wiki_answer(message: Message):
     try:
         await wait_wiki.edit_text(text=get_wiki(message.text),
                                   reply_markup=assist_leave_wiki_keyboard)
-        users_data[message.from_user.id]['user_status'] = None
+        users_data[message.from_user.id]['user_status'] = 'info'
     except Exception as ex:
         await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
                                        f'Хотите узнать что-то еще?',
                                   reply_markup=assist_wiki_keyboard)
-        users_data[message.from_user.id]['user_status'] = None
+        users_data[message.from_user.id]['user_status'] = 'info'
         print(ex)
 
 
@@ -74,7 +74,7 @@ async def process_leave_here_wiki_press_button(callback: CallbackQuery):
                                      reply_markup=None)
     await callback.message.answer(text='Хотите узнать что-то еще?',
                                   reply_markup=assist_wiki_keyboard)
-    users_data[callback.from_user.id]['user_status'] = None
+    users_data[callback.from_user.id]['user_status'] = 'info'
 
 
 # -----Блок погоды-----
