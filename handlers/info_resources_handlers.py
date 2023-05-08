@@ -44,8 +44,14 @@ async def process_wiki_button_press(callback: CallbackQuery):
 async def process_wiki_answer(message: Message):
     wait_wiki = await message.answer(text='Пожалуйста подождите...')
     await wiki_button_press.delete()
-    await wait_wiki.edit_text(text=get_wiki(message.text),
-                              reply_markup=assist_leave_wiki_keyboard)
+    try:
+        await wait_wiki.edit_text(text=get_wiki(message.text),
+                                  reply_markup=assist_leave_wiki_keyboard)
+    except Exception as ex:
+        await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
+                                       f'Хотите узнать что-то еще?',
+                                  reply_markup=assist_wiki_keyboard)
+        print(ex)
 
 
 @router_ih.callback_query(Text(text=['button_again_wiki']))
@@ -59,7 +65,7 @@ async def process_again_wiki_press_button(callback: CallbackQuery):
 async def process_leave_here_wiki_press_button(callback: CallbackQuery):
     await callback.message.edit_text(text=callback.message.text,
                                      reply_markup=None)
-    await callback.message.answer(text='Хотите узнать что-то еще??',
+    await callback.message.answer(text='Хотите узнать что-то еще?',
                                   reply_markup=assist_wiki_keyboard)
 
 
