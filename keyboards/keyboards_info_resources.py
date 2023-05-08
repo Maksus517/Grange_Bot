@@ -78,6 +78,8 @@ button_again_open_weather: InlineKeyboardButton = InlineKeyboardButton(text='П�
 button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='Да!',
                                                                callback_data='button_again_wiki')
 
+button_again2_wiki: InlineKeyboardButton = InlineKeyboardButton(text='Eще!',
+                                                                callback_data='button_again_wiki')
 
 assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
 
@@ -89,10 +91,10 @@ assist_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline
                                                                                            [button_back],
                                                                                            [button_no]])
 
-assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
-                                                                                         [button_leave_here_wiki],
+assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again2_wiki,
+                                                                                          button_leave_here_wiki],
                                                                                          [button_back],
-                                                                                         [button_no]])
+                                                                                          [button_no]])
 
 assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
                                                                                    [button_back],
