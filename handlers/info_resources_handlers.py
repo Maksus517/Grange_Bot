@@ -40,23 +40,25 @@ async def process_stop_info_press_button(callback: CallbackQuery):
 @router_ih.callback_query(Text(text=['wikipedia']))
 async def process_wiki_button_press(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'wiki'
-    global wiki_button_press
     wiki_button_press = await callback.message.edit_text(text=LEXICON_INFO_RU['wiki_answer'],
                                                          reply_markup=assist_keyboard)
+    users_data[callback.from_user.id]['message_data'] = wiki_button_press
 
 
 @router_ih.message(FilterWiki(users_data))
 async def process_wiki_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].delete()
     wait_wiki = await message.answer(text='Пожалуйста подождите...')
-    await wiki_button_press.delete()
     try:
-        await wait_wiki.edit_text(text=get_wiki(message.text),
-                                  reply_markup=assist_leave_wiki_keyboard)
+        wiki_answer = await wait_wiki.edit_text(text=get_wiki(message.text),
+                                                reply_markup=assist_leave_wiki_keyboard)
+        users_data[message.from_user.id]['message_data'] = wiki_answer
         users_data[message.from_user.id]['user_status'] = None
     except Exception as ex:
-        await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
-                                       f'Хотите узнать что-то еще?',
-                                  reply_markup=assist_wiki_keyboard)
+        wiki_answer = await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
+                                                     f'Хотите узнать что-то еще?',
+                                                reply_markup=assist_wiki_keyboard)
+        users_data[message.from_user.id]['message_data'] = wiki_answer
         users_data[message.from_user.id]['user_status'] = None
         print(ex)
 
@@ -64,18 +66,18 @@ async def process_wiki_answer(message: Message):
 @router_ih.callback_query(Text(text=['button_again_wiki']))
 async def process_again_wiki_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'wiki'
-    global wiki_button_press
-    wiki_button_press = await callback.message.edit_text(text=LEXICON_INFO_RU['wiki_answer'],
-                                                         reply_markup=assist_keyboard)
+    again_wiki_press_button = await callback.message.edit_text(text=LEXICON_INFO_RU['wiki_answer'],
+                                                               reply_markup=assist_keyboard)
+    users_data[callback.from_user.id]['message_data'] = again_wiki_press_button
 
 
 @router_ih.callback_query(Text(text=['button_leave_here_wiki']))
 async def process_leave_here_wiki_press_button(callback: CallbackQuery):
     await callback.message.edit_text(text=callback.message.text,
                                      reply_markup=None)
-    await callback.message.answer(text='Хотите узнать что-то еще?',
-                                  reply_markup=assist_wiki_keyboard)
-
+    leave_here_wiki_press_button = await callback.message.answer(text='Хотите узнать что-то еще?',
+                                                                 reply_markup=assist_wiki_keyboard)
+    users_data[callback.from_user.id]['message_data'] = leave_here_wiki_press_button
 
 # -----Блок погоды-----
 
