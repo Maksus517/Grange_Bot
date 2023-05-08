@@ -1,12 +1,12 @@
 from aiogram import Router
 from aiogram.filters import Text
-from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery, FSInputFile
+from aiogram.types import Message, CallbackQuery, FSInputFile
 import random
 
 from lexicon import LEXICON_RU, LEXICON_INFO_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
 from data import users_data, user_joke
-from filters import FilterWiki, FilterOpenWeather
+from filters import FilterWiki, FilterOpenWeather, FilterWikiError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
                        assist_joke_keyboard, assist_open_weather_keyboard,
                        assist_wiki_keyboard, assist_leave_wiki_keyboard)
@@ -29,7 +29,7 @@ async def process_back_press_button(callback: CallbackQuery):
 async def process_stop_info_press_button(callback: CallbackQuery):
     if callback.from_user.id in users_data:
         await callback.message.edit_text(text=LEXICON_RU['no_text'])
-        users_data[callback.from_user.id]['user_status'] = 'Chat'
+        users_data[callback.from_user.id]['user_status'] = 'chat'
     else:
         await callback.answer(text='Отправьте команду /start')
 
@@ -51,21 +51,13 @@ async def process_wiki_answer(message: Message):
     try:
         await wait_wiki.edit_text(text=get_wiki(message.text),
                                   reply_markup=assist_leave_wiki_keyboard)
-        users_data[message.from_user.id]['user_status'] = 'info'
+        users_data[message.from_user.id]['user_status'] = 'wiki_state'
     except Exception as ex:
         await wait_wiki.edit_text(text=f'К сожалению не удалось найти информацию о {message.text}...\n'
                                        f'Хотите узнать что-то еще?',
                                   reply_markup=assist_wiki_keyboard)
-        users_data[message.from_user.id]['user_status'] = 'info'
+        users_data[message.from_user.id]['user_status'] = 'wiki_state'
         print(ex)
-
-
-@router_ih.callback_query(Text(text=['button_again_wiki']))
-async def process_again_wiki_press_button(callback: CallbackQuery):
-    users_data[callback.from_user.id]['user_status'] = 'wiki'
-    global wiki_button_press
-    wiki_button_press = await callback.message.edit_text(text=LEXICON_INFO_RU['wiki_answer'],
-                                                         reply_markup=assist_keyboard)
 
 
 @router_ih.callback_query(Text(text=['button_leave_here_wiki']))
@@ -74,7 +66,7 @@ async def process_leave_here_wiki_press_button(callback: CallbackQuery):
                                      reply_markup=None)
     await callback.message.answer(text='Хотите узнать что-то еще?',
                                   reply_markup=assist_wiki_keyboard)
-    users_data[callback.from_user.id]['user_status'] = 'info'
+    users_data[callback.from_user.id]['user_status'] = 'wiki_state'
 
 
 # -----Блок погоды-----
@@ -150,3 +142,6 @@ async def process_joke_press_button(callback: CallbackQuery):
                                               '<b>Что-то еще?</b>',
                                          reply_markup=info_keyboard)
         print(ex)
+
+
+# -----Блок обработки ошибок-----
