@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardBut
 from lexicon import LEXICON_RU
 
 
-# -----Блок "общие кнопки"-----
+# -----Other keyboard -----
 
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                          callback_data='button_back')
@@ -11,7 +11,7 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
 assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
 
 
-# -----Блок кнопок "Инфо"-----
+# -----Info keyboard-----
 
 button_wiki: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['wiki'],
                                                          callback_data='wikipedia')
@@ -26,7 +26,7 @@ info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[but
                                                                             [button_no]])
 
 
-# -----Блок кнопок "Википедия"-----
+# -----Wikipedia keyboard-----
 
 button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить ответ',
                                                                     callback_data='button_leave_here_wiki')
@@ -41,7 +41,7 @@ assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboar
                                                                                    [button_no]])
 
 
-# -----Блок кнопок "Погода"-----
+# -----Weather keyboard-----
 
 button_ow_1: InlineKeyboardButton = InlineKeyboardButton(text='Москва',
                                                          callback_data='Москва')
@@ -75,30 +75,20 @@ button_ow_15: InlineKeyboardButton = InlineKeyboardButton(text='Волгогра
                                                           callback_data='Волгоград')
 button_ow_16: InlineKeyboardButton = InlineKeyboardButton(text='Пермь',
                                                           callback_data='Пермь')
-open_weather_keyboard: InlineKeyboardMarkup = \
-    InlineKeyboardMarkup(inline_keyboard=[[button_ow_1, button_ow_2, button_ow_3, button_ow_4],
-                                  [button_ow_5, button_ow_6, button_ow_7, button_ow_8],
-                                  [button_ow_9, button_ow_10, button_ow_11, button_ow_12],
-                                  [button_ow_13, button_ow_14, button_ow_15, button_ow_16],
-                                  [button_back]])
-
-
-button_again_open_weather: InlineKeyboardButton = InlineKeyboardButton(text='✅ Посмотреть погоду в другом городе',
-                                                                       callback_data='button_again_open_weather')
 button_leave_here_open_weather: InlineKeyboardButton = \
     InlineKeyboardButton(text='📌 Закрепить ответ',
                          callback_data='button_leave_here_open_weather')
-assist_open_weather_keyboard: InlineKeyboardMarkup = \
-    InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
+
+open_weather_keyboard: InlineKeyboardMarkup = \
+    InlineKeyboardMarkup(inline_keyboard=[[button_ow_1, button_ow_2, button_ow_3, button_ow_4],
+                                          [button_ow_5, button_ow_6, button_ow_7, button_ow_8],
+                                          [button_ow_9, button_ow_10, button_ow_11, button_ow_12],
+                                          [button_ow_13, button_ow_14, button_ow_15, button_ow_16],
                                           [button_leave_here_open_weather],
-                                          [button_back],
-                                          [button_no]])
-leave_open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_open_weather],
-                                                                                          [button_back],
-                                                                                          [button_no]])
+                                          [button_back]])
 
 
-# -----Блок кнопок "Анекдоты"-----
+# -----Jokes keyboard-----
 
 button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='✅ Ещё!',
                                                                callback_data='button_again_joke')
