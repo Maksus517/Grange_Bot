@@ -15,7 +15,7 @@ router_ih = Router()
 
 # -----Other handlers-----
 
-@router_ih.callback_query(Text(text=['button_back']))
+@router_ih.callback_query(Text(text=['button_back_info']))
 async def process_back_press_button(callback: CallbackQuery):
     await callback.message.edit_text(text=LEXICON_INFO_RU['back_press_button'],
                                      reply_markup=info_keyboard)

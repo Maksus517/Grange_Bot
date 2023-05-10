@@ -42,12 +42,8 @@ async def process_help_command(message: Message):
 @router_ch.message(Command(commands=['info_resources']))
 async def process_info_command(message: Message):
     if message.from_user.id in users_data:
-        photo: FSInputFile = FSInputFile('info_bot.jpg')
         await message.answer(text=LEXICON_RU['/info_resources'],
                              reply_markup=info_keyboard)
-        # await message.answer_photo(photo=photo,
-        #                            caption=LEXICON_RU['/info_resources'],
-        #                            reply_markup=info_keyboard)
         users_data[message.from_user.id]['user_status'] = 'info'
     else:
         await message.answer(text='Отправьте команду /start')

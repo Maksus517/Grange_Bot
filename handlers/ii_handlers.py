@@ -10,8 +10,8 @@ router_ii: Router = Router()
 
 @router_ii.message(FilterChat(users_data))
 async def process_i_i_answer(message: Message):
+    bot_writes = await message.answer(text='Печатаю...')
     try:
-        bot_writes = await message.answer(text='Печатаю...')
         await bot_writes.edit_text(text=chat_gpt(message.text))
     except Exception as ex:
         await bot_writes.edit_text(text='Ой, что-то я устал, пойду прилягу...')

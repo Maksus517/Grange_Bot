@@ -5,7 +5,7 @@ from lexicon import LEXICON_RU
 # -----Other keyboard -----
 
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
-                                                         callback_data='button_back')
+                                                         callback_data='button_back_info')
 button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
                                                        callback_data='button_no_info')
 

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as BS
 import random
+import asyncio
 
 
 URL = 'https://www.anekdot.ru/last/good/'

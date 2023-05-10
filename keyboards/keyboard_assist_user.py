@@ -1,11 +1,26 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from lexicon import LEXICON_RU
 
 
-button_message_mp3: KeyboardButton = KeyboardButton(text=LEXICON_RU['message_mp3'])
-button_no: KeyboardButton = KeyboardButton(text=LEXICON_RU['button_no_info'])
+# -----Support_keyboard-----
+
+button_message_mp3: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['message_mp3'],
+                                                                callback_data='message_mp3_answer')
+
+button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
+                                                       callback_data='button_no_info')
 
 
-support_keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(keyboard=[[button_message_mp3],
-                                                                      [button_no]],
-                                                            resize_keyboard=True)
+support_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_message_mp3],
+                                                                               [button_no]])
+
+
+# -----message_to_mp3_keyboard-----
+
+button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                         callback_data='button_no_message_mp3')
+
+assist_assist_user_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
+
+
+send_mp3_answer_keyboard: InlineKeyboardButton = InlineKeyboardButton()
