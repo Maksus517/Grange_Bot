@@ -2,9 +2,9 @@ from aiogram import Router
 from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
-from lexicon import LEXICON_RU, LEXICON_INFO_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU
+from lexicon import LEXICON_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU, LEXICON_INFO_RU
 from services import get_wiki, get_weather, news_parser, joke
-from data import users_data, user_joke
+from data import users_data
 from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
                        assist_wiki_keyboard, assist_leave_wiki_keyboard, news_press_button_keyboard,
@@ -17,7 +17,7 @@ router_ih = Router()
 
 @router_ih.callback_query(Text(text=['button_back']))
 async def process_back_press_button(callback: CallbackQuery):
-    await callback.message.edit_text(text='<b>Что-то еще?</b>',
+    await callback.message.edit_text(text=LEXICON_INFO_RU['back_press_button'],
                                      reply_markup=info_keyboard)
     users_data[callback.from_user.id]['user_status'] = 'info'
     users_data[callback.from_user.id]['data_list'] = []

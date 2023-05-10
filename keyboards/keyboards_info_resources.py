@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from lexicon import LEXICON_RU
 
 
@@ -137,7 +137,3 @@ assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
                      [button_back],
                      [button_no]]
 )
-
-
-
-

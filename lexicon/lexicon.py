@@ -42,7 +42,7 @@ LEXICON_RU: dict[str, str] = {
 
 
 LEXICON_INFO_RU: dict[str, str] = {
-    'open_weather_more': 'В каком городе, вы еще хотите узнать погоду?'
+    'back_press_button': '<b>Что-то еще?</b>'
 }
 
 
