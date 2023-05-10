@@ -17,8 +17,10 @@ router_ih = Router()
 
 @router_ih.callback_query(Text(text=['button_back_info']))
 async def process_back_press_button(callback: CallbackQuery):
-    await callback.message.edit_text(text=LEXICON_INFO_RU['back_press_button'],
-                                     reply_markup=info_keyboard)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_INFO_RU['back_press_button'],
+        reply_markup=info_keyboard
+    )
     users_data[callback.from_user.id]['user_status'] = 'info'
     users_data[callback.from_user.id]['data_list'] = []
 
@@ -26,7 +28,9 @@ async def process_back_press_button(callback: CallbackQuery):
 @router_ih.callback_query(Text(text=['button_no_info']))
 async def process_stop_info_press_button(callback: CallbackQuery):
     if callback.from_user.id in users_data:
-        await callback.message.edit_text(text=LEXICON_RU['no_text'])
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=LEXICON_RU['no_text']
+        )
         users_data[callback.from_user.id]['user_status'] = 'chat'
         users_data[callback.from_user.id]['data_list'] = []
     else:
@@ -115,8 +119,10 @@ async def process_leave_here_open_weather_press_button(callback: CallbackQuery):
 
 @router_ih.callback_query(FilterOpenWeather(users_data))
 async def process_city_press_button(callback: CallbackQuery):
-    await callback.message.edit_text(text=get_weather(callback.data),
-                                     reply_markup=open_weather_keyboard)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=get_weather(callback.data),
+        reply_markup=open_weather_keyboard
+    )
 
 
 @router_ih.message(FilterOpenWeather(users_data))
@@ -214,26 +220,30 @@ async def process_wiki_error_answer(message: Message):
 async def process_joke_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['data_list'] = joke
     users_data[callback.from_user.id]['user_status'] = 'joke'
-    await callback.message.edit_text(text=users_data[callback.from_user.id]['data_list'][0],
-                                     reply_markup=assist_joke_keyboard)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=users_data[callback.from_user.id]['data_list'][0],
+        reply_markup=assist_joke_keyboard)
     del users_data[callback.from_user.id]['data_list'][0]
 
 
 @router_ih.callback_query(Text(text=['button_joke_again']))
 async def process_joke_again_press_button(callback: CallbackQuery):
     if users_data[callback.from_user.id]['data_list']:
-        await callback.message.edit_text(text=users_data[callback.from_user.id]['data_list'][0],
-                                         reply_markup=assist_joke_keyboard)
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=users_data[callback.from_user.id]['data_list'][0],
+            reply_markup=assist_joke_keyboard)
         del users_data[callback.from_user.id]['data_list'][0]
     else:
-        await callback.message.edit_text(text=LEXICON_JOKE_RU['joke_no_found'],
-                                         reply_markup=info_keyboard)
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=LEXICON_JOKE_RU['joke_no_found'],
+            reply_markup=info_keyboard)
 
 
 @router_ih.callback_query(Text(text=['button_leave_here_joke']))
 async def process_leave_here_joke_press_button(callback: CallbackQuery):
-    await callback.message.edit_text(text=callback.message.text,
-                                     reply_markup=None)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=callback.message.text,
+        reply_markup=None)
     del users_data[callback.from_user.id]['data_list'][0]
     users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
         text=users_data[callback.from_user.id]['data_list'][0],
