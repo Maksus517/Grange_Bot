@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.filters import Text
-from aiogram.types import Message, CallbackQuery, FSInputFile
+from aiogram.types import Message, CallbackQuery
 
 from lexicon import LEXICON_RU, LEXICON_INFO_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU
 from services import get_wiki, get_weather, news_parser, joke
