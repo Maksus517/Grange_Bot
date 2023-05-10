@@ -80,6 +80,12 @@ LEXICON_WEATHER_RU: dict[str, str] = {
 }
 
 
+LEXICON_JOKE_RU: dict[str, str] = {
+    'joke_no_found': 'Вы прочитали все анекдоты, попробуйте посмотреть позже...\n'
+                     '<b>Что-то еще?</b>'
+}
+
+
 LEXICON_MENU_RU: dict[str, str] = {
     '/help': 'Справка о работе бота',
 

@@ -16,7 +16,7 @@ async def process_start_command(message: Message):
                                             'user_status': 'chat',
                                             'counter': 0,
                                             'message_data': None,
-                                            'news_list': [],
+                                            'data_list': [],
                                             'user_premium': False}
         data_base: DataBase = DataBase(message)
         data_base.insert_user_data()
