@@ -25,7 +25,10 @@ async def process_message_mp3_answer(callback: CallbackQuery):
 
 @router_sh.callback_query(Text(text=['button_no_message_mp3']))
 async def process_message_mp3_press_back_button(callback: CallbackQuery):
-    await callback.message.edit_text(text=LEXICON_RU['/assist_user'], reply_markup=support_keyboard)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_RU['/assist_user'],
+        reply_markup=support_keyboard
+    )
     users_data[callback.from_user.id]['user_status'] = 'assist'
 
 
@@ -34,7 +37,8 @@ async def process_send_mp3_answer(message: Message, bot: Bot):
     await users_data[message.from_user.id]['message_data'].delete()
     await message_to_mp3(message)
     await bot.send_audio(message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'))
-    await message.answer(text=LEXICON_RU['/assist_user'],
-                         ephemeral=True,
-                         reply_markup=support_keyboard)
+    users_data[message.from_user.id]['message_data'] = await message.answer(
+        text=LEXICON_RU['/assist_user'],
+        ephemeral=True,
+        reply_markup=support_keyboard)
     os.remove(f'voice from {message.from_user.id}.mp3')

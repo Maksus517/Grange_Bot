@@ -3,7 +3,6 @@ from aiogram.types import Message
 from config_data import load_config, Config
 
 users_data: dict[int, dict[str, str | int | list | bool | Message | None]] = {}
-user_joke: dict[int, list[str]] = {}
 
 
 class DataBase:
@@ -51,8 +50,9 @@ class DataBase:
             for i in cursor.fetchall():
                 users_data.setdefault(int(i[0]), {})
                 users_data[i[0]].setdefault('user_name', str(i[1]))
-                users_data[i[0]].setdefault('user_status', None)
+                users_data[i[0]].setdefault('user_status', 'chat')
                 users_data[i[0]].setdefault('user_premium', bool(i[2]))
+                users_data[i[0]].setdefault('message_data', None)
 
         if self.connection:
             self.connection.close()
