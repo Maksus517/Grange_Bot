@@ -184,9 +184,10 @@ async def process_news_press_leave_here_button(callback: CallbackQuery):
     await callback.message.edit_text(text=callback.message.text,
                                      reply_markup=None)
     if users_data[callback.from_user.id]['counter'] == 0:
+        users_data[callback.from_user.id]['counter'] += 1
         users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
             text=users_data[callback.from_user.id]['data_list'][users_data[callback.from_user.id]['counter']],
-            reply_markup=news_press_button_keyboard
+            reply_markup=news_next_prev_button_keyboard
         )
     elif users_data[callback.from_user.id]['counter'] == 14:
         users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
@@ -218,8 +219,8 @@ async def process_joke_press_button(callback: CallbackQuery):
     del users_data[callback.from_user.id]['data_list'][0]
 
 
-@router_ih.callback_query(Text(text=['button_again_joke']))
-async def process_joke_press_button(callback: CallbackQuery):
+@router_ih.callback_query(Text(text=['button_joke_again']))
+async def process_joke_again_press_button(callback: CallbackQuery):
     if users_data[callback.from_user.id]['data_list']:
         await callback.message.edit_text(text=users_data[callback.from_user.id]['data_list'][0],
                                          reply_markup=assist_joke_keyboard)
@@ -227,3 +228,15 @@ async def process_joke_press_button(callback: CallbackQuery):
     else:
         await callback.message.edit_text(text=LEXICON_JOKE_RU['joke_no_found'],
                                          reply_markup=info_keyboard)
+
+
+@router_ih.callback_query(Text(text=['button_leave_here_joke']))
+async def process_leave_here_joke_press_button(callback: CallbackQuery):
+    await callback.message.edit_text(text=callback.message.text,
+                                     reply_markup=None)
+    del users_data[callback.from_user.id]['data_list'][0]
+    users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
+        text=users_data[callback.from_user.id]['data_list'][0],
+        reply_markup=assist_joke_keyboard
+    )
+    del users_data[callback.from_user.id]['data_list'][0]

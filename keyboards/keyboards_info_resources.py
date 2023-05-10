@@ -8,6 +8,7 @@ button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button
                                                          callback_data='button_back')
 button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
                                                        callback_data='button_no_info')
+
 assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
 
 
@@ -21,9 +22,12 @@ button_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['news']
                                                          callback_data='news')
 button_joke: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['joke'],
                                                          callback_data='joke')
-info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_wiki, button_open_weather],
-                                                                            [button_news, button_joke],
-                                                                            [button_no]])
+
+info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_wiki, button_open_weather],
+                     [button_news, button_joke],
+                     [button_no]]
+)
 
 
 # -----Wikipedia keyboard-----
@@ -32,13 +36,17 @@ button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 �
                                                                     callback_data='button_leave_here_wiki')
 button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='✅ Eще!',
                                                                callback_data='button_again_wiki')
-assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki,
-                                                                                          button_leave_here_wiki],
-                                                                                         [button_back],
-                                                                                         [button_no]])
-assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_wiki],
-                                                                                   [button_back],
-                                                                                   [button_no]])
+assist_leave_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_again_wiki, button_leave_here_wiki],
+                     [button_back],
+                     [button_no]]
+)
+
+assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_again_wiki],
+                     [button_back],
+                     [button_no]]
+)
 
 
 # -----Weather keyboard----- (СДЕЛАТЬ КНОПКУ СВОЙ ГОРОД)!!!!!
@@ -79,13 +87,14 @@ button_leave_here_open_weather: InlineKeyboardButton = \
     InlineKeyboardButton(text='📌 Закрепить',
                          callback_data='button_leave_here_open_weather')
 
-open_weather_keyboard: InlineKeyboardMarkup = \
-    InlineKeyboardMarkup(inline_keyboard=[[button_ow_1, button_ow_2, button_ow_3, button_ow_4],
-                                          [button_ow_5, button_ow_6, button_ow_7, button_ow_8],
-                                          [button_ow_9, button_ow_10, button_ow_11, button_ow_12],
-                                          [button_ow_13, button_ow_14, button_ow_15, button_ow_16],
-                                          [button_leave_here_open_weather, button_back],
-                                          [button_no]])
+open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_ow_1, button_ow_2, button_ow_3, button_ow_4],
+                     [button_ow_5, button_ow_6, button_ow_7, button_ow_8],
+                     [button_ow_9, button_ow_10, button_ow_11, button_ow_12],
+                     [button_ow_13, button_ow_14, button_ow_15, button_ow_16],
+                     [button_leave_here_open_weather, button_back],
+                     [button_no]]
+)
 
 
 # -----News keyboard-----
@@ -98,29 +107,36 @@ button_news_prev: InlineKeyboardButton = InlineKeyboardButton(text='⬅️ Пр�
 button_leave_here_news: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
                                                                     callback_data='button_leave_here_news')
 
-news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
-                                                                        [[button_news_next],
-                                                                         [button_leave_here_news, button_back],
-                                                                         [button_no]])
+news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_next],
+                     [button_leave_here_news, button_back],
+                     [button_no]]
+)
 
-news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
-                                                                            [[button_news_prev, button_news_next],
-                                                                             [button_leave_here_news, button_back],
-                                                                             [button_no]])
+news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_prev, button_news_next],
+                     [button_leave_here_news, button_back],
+                     [button_no]]
+)
 
-news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
-                                                                       [[button_news_prev],
-                                                                        [button_leave_here_news, button_back],
-                                                                        [button_no]])
+news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_prev],
+                     [button_leave_here_news, button_back],
+                     [button_no]]
+)
 
 
 # -----Jokes keyboard-----
 
-button_again_joke: InlineKeyboardButton = InlineKeyboardButton(text='✅ Ещё!',
-                                                               callback_data='button_again_joke')
-assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_again_joke],
-                                                                                   [button_back],
-                                                                                   [button_no]])
+button_joke_again: InlineKeyboardButton = InlineKeyboardButton(text='✅ Ещё!',
+                                                               callback_data='button_joke_again')
+button_leave_here_joke: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
+                                                                    callback_data='button_leave_here_joke')
+assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_joke_again, button_leave_here_joke],
+                     [button_back],
+                     [button_no]]
+)
 
 
 
