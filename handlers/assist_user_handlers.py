@@ -7,7 +7,7 @@ from lexicon import LEXICON_RU
 from data import users_data
 from filters import FilterMessageMp3
 from services import message_to_mp3
-from keyboards import support_keyboard, assist_keyboard, assist_assist_user_keyboard
+from keyboards import support_keyboard, assist_assist_user_keyboard
 
 router_sh = Router()
 
@@ -33,7 +33,7 @@ async def process_send_mp3_answer(message: Message, bot: Bot):
     await users_data[message.from_user.id]['message_data'].delete()
     await message_to_mp3(message)
     await bot.send_audio(message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'))
-    await message.answer(text=LEXICON_RU['message_mp3_answer'],
+    await message.answer(text=LEXICON_RU['/assist_user'],
                          ephemeral=True,
-                         reply_markup=assist_assist_user_keyboard)
+                         reply_markup=support_keyboard)
     os.remove(f'voice from {message.from_user.id}.mp3')

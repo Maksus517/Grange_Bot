@@ -19,8 +19,7 @@ support_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[
 
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                          callback_data='button_no_message_mp3')
+button_leave_here_mp3: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
+                                                                   callback_data='button_leave_here_wiki')
 
 assist_assist_user_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_back]])
-
-
-send_mp3_answer_keyboard: InlineKeyboardButton = InlineKeyboardButton()
