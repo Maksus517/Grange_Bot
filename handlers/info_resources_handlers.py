@@ -3,12 +3,13 @@ from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery, FSInputFile
 import random
 
-from lexicon import LEXICON_RU, LEXICON_INFO_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU
+from lexicon import LEXICON_RU, LEXICON_INFO_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_NEWS_RU
 from services import get_wiki, get_weather, news_parser, joke_pars
 from data import users_data, user_joke
-from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterOpenWeatherError
-from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard,
-                       assist_joke_keyboard, assist_wiki_keyboard, assist_leave_wiki_keyboard)
+from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError
+from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
+                       assist_wiki_keyboard, assist_leave_wiki_keyboard, news_press_button_keyboard,
+                       news_next_prev_button_keyboard, news_prev_button_keyboard)
 
 router_ih = Router()
 
@@ -129,13 +130,73 @@ async def process_open_weather_answer(message: Message):
 
 @router_ih.callback_query(Text(text=['news']))
 async def process_news_press_button(callback: CallbackQuery):
-    news = news_parser()
-    await callback.message.edit_text(text='4 последних новости:')
-    for _ in range(4):
-        await callback.message.answer(text=next(news))
-    await callback.message.answer(text='<b>Что-то еще?</b>',
-                                  reply_markup=info_keyboard)
-    users_data[callback.from_user.id]['user_status'] = None
+    users_data[callback.from_user.id]['user_status'] = 'news'
+    users_data[callback.from_user.id]['counter'] = 0
+    users_data[callback.from_user.id]['news_list'] = list(news_parser())
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=users_data[callback.from_user.id]['news_list']
+                       [users_data[callback.from_user.id]['counter']],
+        reply_markup=news_press_button_keyboard
+    )
+
+
+@router_ih.callback_query(Text(text=['button_news_next']))
+async def process_news_press_next_button(callback: CallbackQuery):
+    users_data[callback.from_user.id]['counter'] += 1
+    if users_data[callback.from_user.id]['counter'] == 14:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_prev_button_keyboard
+        )
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_next_prev_button_keyboard)
+
+
+@router_ih.callback_query(Text(text=['button_news_prev']))
+async def process_news_press_prev_button(callback: CallbackQuery):
+    users_data[callback.from_user.id]['counter'] -= 1
+    if users_data[callback.from_user.id]['counter'] == 0:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_press_button_keyboard)
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_next_prev_button_keyboard)
+
+
+@router_ih.callback_query(Text(text=['button_leave_here_news']))
+async def process_news_press_leave_here_button(callback: CallbackQuery):
+    await callback.message.edit_text(text=callback.message.text,
+                                     reply_markup=None)
+    if users_data[callback.from_user.id]['counter'] == 0:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_press_button_keyboard)
+    elif users_data[callback.from_user.id]['counter'] == 14:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_prev_button_keyboard)
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.answer(
+            text=users_data[callback.from_user.id]['news_list']
+                           [users_data[callback.from_user.id]['counter']],
+            reply_markup=news_next_prev_button_keyboard)
+
+
+@router_ih.message(FilterNewsError(users_data))
+async def process_wiki_error_answer(message: Message):
+    await users_data[message.from_user.id]['message_data'].edit_text(text=message.text,
+                                                                     reply_markup=None)
+    users_data[message.from_user.id]['user_status'] = 'chat'
 
 
 # -----Joke handlers-----

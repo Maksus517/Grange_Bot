@@ -13,7 +13,10 @@ router_ch: Router = Router()
 async def process_start_command(message: Message):
     if message.from_user.id not in users_data:
         users_data[message.from_user.id] = {'user_name': message.from_user.first_name,
-                                            'user_status': 'chat', 'message_data': None,
+                                            'user_status': 'chat',
+                                            'counter': 0,
+                                            'message_data': None,
+                                            'news_list': [],
                                             'user_premium': False}
         data_base: DataBase = DataBase(message)
         data_base.insert_user_data()

@@ -50,9 +50,9 @@ class FilterWikiError(BaseFilter):
         return self.users_data[message.from_user.id]['user_status'] == 'state_wiki'
 
 
-class FilterOpenWeatherError(BaseFilter):
+class FilterNewsError(BaseFilter):
     def __init__(self, users_data: dict[int, dict]) -> None:
         self.users_data = users_data
 
     async def __call__(self, message: Message) -> bool:
-        return self.users_data[message.from_user.id]['user_status'] == 'state_open_weather'
+        return self.users_data[message.from_user.id]['user_status'] == 'news'

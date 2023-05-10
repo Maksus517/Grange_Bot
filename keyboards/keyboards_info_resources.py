@@ -28,7 +28,7 @@ info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[but
 
 # -----Wikipedia keyboard-----
 
-button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить ответ',
+button_leave_here_wiki: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
                                                                     callback_data='button_leave_here_wiki')
 button_again_wiki: InlineKeyboardButton = InlineKeyboardButton(text='✅ Eще!',
                                                                callback_data='button_again_wiki')
@@ -41,7 +41,7 @@ assist_wiki_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboar
                                                                                    [button_no]])
 
 
-# -----Weather keyboard-----
+# -----Weather keyboard----- (СДЕЛАТЬ КНОПКУ СВОЙ ГОРОД)!!!!!
 
 button_ow_1: InlineKeyboardButton = InlineKeyboardButton(text='Москва',
                                                          callback_data='Москва')
@@ -76,7 +76,7 @@ button_ow_15: InlineKeyboardButton = InlineKeyboardButton(text='Волгогра
 button_ow_16: InlineKeyboardButton = InlineKeyboardButton(text='Пермь',
                                                           callback_data='Пермь')
 button_leave_here_open_weather: InlineKeyboardButton = \
-    InlineKeyboardButton(text='📌 Закрепить ответ',
+    InlineKeyboardButton(text='📌 Закрепить',
                          callback_data='button_leave_here_open_weather')
 
 open_weather_keyboard: InlineKeyboardMarkup = \
@@ -84,8 +84,34 @@ open_weather_keyboard: InlineKeyboardMarkup = \
                                           [button_ow_5, button_ow_6, button_ow_7, button_ow_8],
                                           [button_ow_9, button_ow_10, button_ow_11, button_ow_12],
                                           [button_ow_13, button_ow_14, button_ow_15, button_ow_16],
-                                          [button_leave_here_open_weather],
-                                          [button_back]])
+                                          [button_leave_here_open_weather, button_back],
+                                          [button_no]])
+
+
+# -----News keyboard-----
+
+button_news_next: InlineKeyboardButton = InlineKeyboardButton(text='Следующая ➡️',
+                                                              callback_data='button_news_next')
+button_news_prev: InlineKeyboardButton = InlineKeyboardButton(text='⬅️ Предыдущая',
+                                                              callback_data='button_news_prev')
+
+button_leave_here_news: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
+                                                                    callback_data='button_leave_here_news')
+
+news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
+                                                                        [[button_news_next],
+                                                                         [button_leave_here_news, button_back],
+                                                                         [button_no]])
+
+news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
+                                                                            [[button_news_prev, button_news_next],
+                                                                             [button_leave_here_news, button_back],
+                                                                             [button_no]])
+
+news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=
+                                                                       [[button_news_prev],
+                                                                        [button_leave_here_news, button_back],
+                                                                        [button_no]])
 
 
 # -----Jokes keyboard-----

@@ -2,7 +2,7 @@ import psycopg2
 from aiogram.types import Message
 from config_data import load_config, Config
 
-users_data: dict[int, dict[str, str | int | bool | Message | None]] = {}
+users_data: dict[int, dict[str, str | int | list | bool | Message | None]] = {}
 user_joke: dict[int, list[str]] = {}
 
 
