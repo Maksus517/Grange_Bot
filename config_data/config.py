@@ -2,7 +2,7 @@ from environs import Env
 
 
 class DataBase:
-    def __init__(self, host: str, user: str, password: str, db_name: str):
+    def __init__(self, host: str, user: str, password: str, db_name: str) -> None:
         self.host = host
         self.user = user
         self.password = password
@@ -10,23 +10,23 @@ class DataBase:
 
 
 class OpenAI:
-    def __init__(self, token: str):
+    def __init__(self, token: str) -> None:
         self.token = token
 
 
 class OpenWeather:
-    def __init__(self, token: str):
+    def __init__(self, token: str) -> None:
         self.token = token
 
 
 class TgBot:
-    def __init__(self, token: str, admin_ids: list[int]):
+    def __init__(self, token: str, admin_ids: list[int]) -> None:
         self.token = token
         self.admin_ids = admin_ids
 
 
 class Config:
-    def __init__(self, tg_bot: TgBot, open_weather: OpenWeather, open_ai: OpenAI, data_base: DataBase):
+    def __init__(self, tg_bot: TgBot, open_weather: OpenWeather, open_ai: OpenAI, data_base: DataBase) -> None:
         self.tg_bot = tg_bot
         self.open_weather = open_weather
         self.open_ai = open_ai

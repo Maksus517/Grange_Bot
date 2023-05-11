@@ -10,6 +10,7 @@ from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, as
                        assist_wiki_keyboard, assist_leave_wiki_keyboard, news_press_button_keyboard,
                        news_next_prev_button_keyboard, news_prev_button_keyboard)
 
+
 router_ih = Router()
 
 
