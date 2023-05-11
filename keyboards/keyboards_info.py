@@ -133,7 +133,7 @@ button_joke_again: InlineKeyboardButton = InlineKeyboardButton(text='✅ Ещё!
 button_leave_here_joke: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
                                                                     callback_data='button_leave_here_joke')
 assist_joke_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
-    inline_keyboard=[[button_joke_again, button_leave_here_joke],
+    inline_keyboard=[[button_leave_here_joke, button_joke_again],
                      [button_back],
                      [button_no]]
 )
