@@ -10,6 +10,8 @@ router_ii: Router = Router()
 
 @router_ii.message(FilterChat(users_data))
 async def process_i_i_answer(message: Message):
+    if users_data[message.from_user.id]['message_data']:
+        await users_data[message.from_user.id]['message_data'].delete()
     bot_writes = await message.answer(text='Печатаю...')
     try:
         await bot_writes.edit_text(text=chat_gpt(message.text))

@@ -1,11 +1,12 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from lexicon import LEXICON_ADMIN_RU
 
 
-button_deleted_menu: KeyboardButton = KeyboardButton(text=LEXICON_ADMIN_RU['deleted_menu'])
-button_no: KeyboardButton = KeyboardButton(text=LEXICON_ADMIN_RU['no_button_admin'])
+button_deleted_menu: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_ADMIN_RU['deleted_menu'],
+                                                                 callback_data='admin_deleted_menu')
+button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_ADMIN_RU['no_button_admin'],
+                                                       callback_data='no_button_admin')
 
 
-admin_keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(keyboard=[[button_deleted_menu],
-                                                                    [button_no]],
-                                                          resize_keyboard=True)
+admin_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_deleted_menu],
+                                                                             [button_no]])

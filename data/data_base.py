@@ -16,7 +16,7 @@ class DataBase:
             database=self.config.data_base.db_name
         )
 
-    def insert_user_data(self) -> None:
+    async def insert_user_data(self) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(
                 f"""INSERT INTO users (id_user, user_name, user_premium) VALUES
@@ -29,7 +29,7 @@ class DataBase:
         if self.connection:
             self.connection.close()
 
-    def insert_user_comment(self) -> None:
+    async def insert_user_comment(self) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(
                 f"""INSERT INTO comment (id_user, user_name, comment) VALUES

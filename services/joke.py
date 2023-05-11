@@ -19,6 +19,7 @@ async def joke_pars(url):
         jokes = soup.find_all('div', class_='text')
         return [i.text for i in jokes]
 
+
 loop = asyncio.get_event_loop()
 joke = loop.run_until_complete(joke_pars(URL))
 random.shuffle(joke)

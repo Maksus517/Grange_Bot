@@ -21,7 +21,7 @@ async def process_start_command(message: Message):
                                             'data_list': [],
                                             'user_premium': False}
         data_base: DataBase = DataBase(message)
-        data_base.insert_user_data()
+        await data_base.insert_user_data()
     photo: FSInputFile = FSInputFile('start_bot.jpg')
     users_data[message.from_user.id]['message_data'] = await message.answer_photo(
         photo=photo,
@@ -69,6 +69,7 @@ async def process_support_command(message: Message):
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
+        users_data[message.from_user.id]['user_status'] = 'assist'
         users_data[message.from_user.id]['message_data'] = await message.answer(
             text=LEXICON_RU['/assist_user'],
             reply_markup=support_keyboard
@@ -84,6 +85,7 @@ async def process_developers_command(message: Message):
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
+        users_data[message.from_user.id]['user_status'] = 'developers'
         users_data[message.from_user.id]['message_data'] = await message.answer(
             text=LEXICON_RU['/developers'],
             reply_markup=developers_keyboard
