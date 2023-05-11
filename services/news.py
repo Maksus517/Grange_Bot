@@ -6,7 +6,7 @@ import aiohttp
 URL = 'https://ria.ru/world/'
 
 
-async def fetch(session, url):
+async def fetch(session, url) -> str:
     async with session.get(url) as response:
         return await response.read()
 
