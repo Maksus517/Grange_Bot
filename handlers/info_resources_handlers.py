@@ -3,7 +3,7 @@ from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
 from lexicon import LEXICON_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU, LEXICON_INFO_RU
-from services import get_wiki, get_weather, news, joke
+from services import get_wiki, get_weather, news, joke_pars
 from data import users_data
 from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
@@ -218,7 +218,7 @@ async def process_wiki_error_answer(message: Message):
 
 @router_ih.callback_query(Text(text=['joke']))
 async def process_joke_press_button(callback: CallbackQuery):
-    users_data[callback.from_user.id]['data_list'] = joke
+    users_data[callback.from_user.id]['data_list'] = await joke_pars()
     users_data[callback.from_user.id]['user_status'] = 'joke'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=users_data[callback.from_user.id]['data_list'][0],

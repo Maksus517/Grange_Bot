@@ -12,14 +12,11 @@ async def fetch(session, url):
         return await response.text()
 
 
-async def joke_pars(url):
+async def joke_pars(url=URL):
     async with aiohttp.ClientSession() as session:
         html = await fetch(session, url)
         soup = BS(html, 'html.parser')
         jokes = soup.find_all('div', class_='text')
-        return [i.text for i in jokes]
-
-
-loop = asyncio.get_event_loop()
-joke = loop.run_until_complete(joke_pars(URL))
-random.shuffle(joke)
+        joke = [i.text for i in jokes]
+        random.shuffle(joke)
+        return joke
