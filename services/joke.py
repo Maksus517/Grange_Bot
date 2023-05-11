@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup as BS
 import random
-import asyncio
 import aiohttp
 
 
@@ -12,7 +11,7 @@ async def fetch(session, url):
         return await response.text()
 
 
-async def joke_pars(url=URL):
+async def joke_pars(url: str = URL) -> list:
     async with aiohttp.ClientSession() as session:
         html = await fetch(session, url)
         soup = BS(html, 'html.parser')
