@@ -24,4 +24,3 @@ async def news_parser(url: str) -> list:
 
 loop = asyncio.get_event_loop()
 news = loop.run_until_complete(news_parser(URL))
-

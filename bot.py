@@ -4,7 +4,7 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from config_data import load_config, Config
-from handlers import router_ch, router_ih, router_ah, router_sh, router_dl, router_ii
+from handlers import router_ch, router_ih, router_ah, router_sh, router_dl, router_ai
 from keyboards import set_main_menu
 from data import load_data
 
@@ -34,7 +34,7 @@ async def main() -> None:
     dp.include_router(router_ih)
     dp.include_router(router_sh)
     dp.include_router(router_dl)
-    dp.include_router(router_ii)
+    dp.include_router(router_ai)
 
     await set_main_menu(bot)
     await bot.delete_webhook(drop_pending_updates=True)

@@ -1,6 +1,6 @@
 from aiogram import Router, Bot
 from aiogram.filters import Text
-from aiogram.types import Message, ReplyKeyboardRemove, FSInputFile, CallbackQuery
+from aiogram.types import Message, FSInputFile, CallbackQuery
 import os
 
 from lexicon import LEXICON_RU
