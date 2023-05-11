@@ -22,6 +22,7 @@ async def process_start_command(message: Message):
                                             'user_premium': False}
         data_base: DataBase = DataBase(message)
         await data_base.insert_user_data()
+    users_data[message.from_user.id]['user_status'] = 'chat'
     photo: FSInputFile = FSInputFile('start_bot.jpg')
     users_data[message.from_user.id]['message_data'] = await message.answer_photo(
         photo=photo,
@@ -38,6 +39,7 @@ async def process_help_command(message: Message):
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
+        users_data[message.from_user.id]['user_status'] = 'chat'
         photo: FSInputFile = FSInputFile('help_bot.gif')
         users_data[message.from_user.id]['message_data'] = await message.answer_photo(
             photo=photo,
