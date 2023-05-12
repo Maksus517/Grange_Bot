@@ -16,10 +16,19 @@ async def process_back_answer(callback: CallbackQuery):
         text=LEXICON_RU['/assist_user'],
         reply_markup=developers_keyboard
     )
-    users_data[callback.from_user.id]['user_status'] = 'chat'
+    users_data[callback.from_user.id]['user_status'] = 'developers'
 
 
-@router_dl.callback_query(Text(text=['comment_user_developers']))
+@router_dl.callback_query(Text(text=['button_back_to_comment']))
+async def button_back_to_comment(callback: CallbackQuery):
+    users_data[callback.from_user.id]['user_status'] = 'comment_wait'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_DEVELOPERS_RU['comment_press_button'],
+        reply_markup=process_comment_answer_keyboard
+    )
+
+
+@router_dl.callback_query(Text(text=['comment_user_developers'] or ['button_back_to_comment']))
 async def process_comment_press_button(callback: CallbackQuery):
     users_data[callback.from_user.id]['user_status'] = 'comment_wait'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
@@ -51,6 +60,6 @@ async def process_send_comment_answer(message: Message):
 async def process_error_comment(message: Message):
     await users_data[message.from_user.id]['message_data'].delete()
     users_data[message.from_user.id]['message_data'] = await message.answer(
-        text=LEXICON_DEVELOPERS_RU['comment_press_button'],
+        text=LEXICON_DEVELOPERS_RU['error_comment_developers'],
         reply_markup=process_comment_answer_keyboard
     )

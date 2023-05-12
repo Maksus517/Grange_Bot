@@ -20,6 +20,9 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
 button_back: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                          callback_data='button_back_developers')
 
+button_back_to_comment: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                                    callback_data='button_back_to_comment')
+
 
 developers_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_comment],
@@ -28,9 +31,10 @@ developers_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
 
 process_comment_answer_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_comment_data_base, button_comment_to_mail],
-                     [button_back]]
+                     [button_back],
+                     [button_no]]
 )
 
 developers_assist_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
-    inline_keyboard=[[button_back]]
+    inline_keyboard=[[button_back_to_comment]]
 )
