@@ -11,7 +11,7 @@ router_ch: Router = Router()
 
 
 @router_ch.message(CommandStart())
-async def process_start_command(message: Message):
+async def process_start_command(message: Message) -> None:
     if message.from_user.id not in users_data:
         users_data[message.from_user.id] = {'user_name': message.from_user.first_name,
                                             'user_status': 'chat',
@@ -34,7 +34,7 @@ async def process_start_command(message: Message):
 
 
 @router_ch.message(Command(commands=['help']))
-async def process_help_command(message: Message):
+async def process_help_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
@@ -50,7 +50,7 @@ async def process_help_command(message: Message):
 
 
 @router_ch.message(Command(commands=['info_resources']))
-async def process_info_command(message: Message):
+async def process_info_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
@@ -66,7 +66,7 @@ async def process_info_command(message: Message):
 
 
 @router_ch.message(Command(commands=['assist_user']))
-async def process_support_command(message: Message):
+async def process_support_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
@@ -82,7 +82,7 @@ async def process_support_command(message: Message):
 
 
 @router_ch.message(Command(commands=['developers']))
-async def process_developers_command(message: Message):
+async def process_developers_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:

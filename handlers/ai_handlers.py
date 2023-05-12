@@ -10,7 +10,7 @@ router_ai: Router = Router()
 
 
 @router_ai.message(FilterChat(users_data))
-async def process_i_i_answer(message: Message):
+async def process_i_i_answer(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
         users_data[message.from_user.id]['message_data'] = None
