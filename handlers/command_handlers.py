@@ -12,8 +12,6 @@ router_ch: Router = Router()
 
 @router_ch.message(CommandStart())
 async def process_start_command(message: Message):
-    if users_data[message.from_user.id]['message_data']:
-        await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id not in users_data:
         users_data[message.from_user.id] = {'user_name': message.from_user.first_name,
                                             'user_status': 'chat',
