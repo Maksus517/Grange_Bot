@@ -128,3 +128,8 @@ LEXICON_DEVELOPERS_RU: dict[str, str] = {
     'comment_save': '✅ Спасибо за отзыв!\n'
                     '⬇️ Можете воспользоваться другими функциями:'
 }
+
+
+LEXICON_TRANSLATOR_RU: dict[str, str] = {
+
+}
