@@ -9,6 +9,9 @@ import googletrans
 button_message_mp3: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['message_mp3'],
                                                                 callback_data='message_mp3_answer')
 
+button_translator: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['translator'],
+                                                               callback_data='translator')
+
 button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
                                                        callback_data='button_no_info')
 

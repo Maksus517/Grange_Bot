@@ -61,3 +61,7 @@ async def process_send_mp3_answer(message: Message, bot: Bot) -> None:
         message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'),
         reply_markup=send_mp3_keyboard
     )
+
+
+# ----Translator-----
+
