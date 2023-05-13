@@ -8,7 +8,4 @@ def text_translator(text: str, src: str, dest: str):
         return translation.text
 
     except Exception as ex:
-        print(ex)
-
-
-print(text_translator('Cerfddf', 'ru', 'en'))
+        return ex
