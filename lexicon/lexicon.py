@@ -24,7 +24,7 @@ LEXICON_RU: dict[str, str] = {
 
     'wiki':   '🔍 Википедия',
 
-    'open_weather': '⛅ Прогноз погоды',
+    'open_weather': '⛅ Погода',
 
     'message_mp3': '🔊 Преобразовать текст в mp3',
 
@@ -144,5 +144,7 @@ LEXICON_TRANSLATOR_RU: dict[str, str] = {
 
     'again_translator_press_button': '❓ Хотите перевести что-то еще?',
 
-    'again_translator_button': '✅ Еще!'
+    'again_translator_button': '✅ Еще!',
+
+    'again_translator_error': 'Что-то пошло не так, попробовать еще раз?'
 }

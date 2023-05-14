@@ -58,10 +58,12 @@ async def process_leave_mp3_press_button(callback: CallbackQuery) -> None:
 async def process_send_mp3_answer(message: Message, bot: Bot) -> None:
     await users_data[message.from_user.id]['message_data'].delete()
     await message_to_mp3(message)
+    mp3_wait = await message.answer(text='Пожалуйста подождите...')
     users_data[message.from_user.id]['message_data'] = await bot.send_audio(
         message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'),
         reply_markup=send_mp3_keyboard
     )
+    await mp3_wait.delete()
 
 
 # ----Translator-----
@@ -127,13 +129,18 @@ async def process_language_choice_two(callback: CallbackQuery) -> None:
 
 @router_sh.message(FilterTranslator(users_data))
 async def process_translation_answer(message: Message) -> None:
-    await users_data[message.from_user.id]['message_data'].delete()
-    await message.answer(text=text_translator(message.text,
-                                              users_data[message.from_user.id]['data_list'][0],
-                                              users_data[message.from_user.id]['data_list'][1]))
-    users_data[message.from_user.id]['user_status'] = 'assist'
-    await message.answer(text=LEXICON_TRANSLATOR_RU['again_translator_press_button'],
-                         reply_markup=again_translator_press_button)
+    try:
+        await users_data[message.from_user.id]['message_data'].delete()
+        await message.answer(text=text_translator(message.text,
+                                                  users_data[message.from_user.id]['data_list'][0],
+                                                  users_data[message.from_user.id]['data_list'][1]))
+        users_data[message.from_user.id]['user_status'] = 'assist'
+        await message.answer(text=LEXICON_TRANSLATOR_RU['again_translator_press_button'],
+                             reply_markup=again_translator_press_button)
+    except Exception as ex:
+        await message.answer(text=LEXICON_TRANSLATOR_RU['again_translator_error'],
+                             reply_markup=again_translator_press_button)
+        print(ex)
 
 
 @router_sh.callback_query(Text(text=['again_translator_button']))
