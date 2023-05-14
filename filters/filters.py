@@ -66,3 +66,25 @@ class FilterNewsError(BaseFilter):
         return self.users_data[message.from_user.id]['user_status'] == 'news'
 
 
+class FilterTranslator(BaseFilter):
+    def __init__(self, users_data: dict[int, dict]) -> None:
+        self.users_data = users_data
+
+    async def __call__(self, message: Message) -> bool:
+        return self.users_data[message.from_user.id]['user_status'] == 'translator'
+
+
+class FilterLanguageChoiceOne(BaseFilter):
+    def __init__(self, users_data: dict[int, dict]) -> None:
+        self.users_data = users_data
+
+    async def __call__(self, message: Message) -> bool:
+        return self.users_data[message.from_user.id]['user_status'] == 'language_choice_one'
+
+
+class FilterLanguageChoiceTwo(BaseFilter):
+    def __init__(self, users_data: dict[int, dict]) -> None:
+        self.users_data = users_data
+
+    async def __call__(self, message: Message) -> bool:
+        return self.users_data[message.from_user.id]['user_status'] == 'language_choice_two'

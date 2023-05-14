@@ -3,11 +3,12 @@ from aiogram.filters import Text
 from aiogram.types import Message, FSInputFile, CallbackQuery
 import os
 
-from lexicon import LEXICON_RU
+from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU
 from data import users_data
-from filters import FilterMessageMp3
+from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
 from services import message_to_mp3
-from keyboards import support_keyboard, assist_assist_user_keyboard, send_mp3_keyboard
+from keyboards import (support_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
+                       choice_language_small_keyboard, choice_language_keyboard)
 
 
 router_sh = Router()
@@ -64,4 +65,32 @@ async def process_send_mp3_answer(message: Message, bot: Bot) -> None:
 
 
 # ----Translator-----
+
+@router_sh.callback_query(Text(text=['translator']))
+async def process_translator_press_button(callback: CallbackQuery):
+    users_data[callback.from_user.id]['user_status'] = 'language_choice_one'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['translator_press_button'],
+        reply_markup=choice_language_small_keyboard()
+    )
+
+
+@router_sh.callback_query(FilterLanguageChoiceOne(users_data))
+async def process_language_choice_one(callback: CallbackQuery):
+    users_data[callback.from_user.id]['data_list'].append(callback.message.text)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['language_choice_one'],
+        reply_markup=choice_language_small_keyboard())
+    users_data[callback.from_user.id]['user_status'] = 'language_choice_two'
+
+
+@router_sh.callback_query(FilterLanguageChoiceTwo(users_data))
+async def process_language_choice_one(callback: CallbackQuery):
+    users_data[callback.from_user.id]['data_list'].append(callback.message.text)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['language_choice_one'],
+        reply_markup=choice_language_small_keyboard())
+    users_data[callback.from_user.id]['user_status'] = 'translator'
+
+
 
