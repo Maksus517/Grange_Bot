@@ -59,11 +59,11 @@ async def process_send_mp3_answer(message: Message, bot: Bot) -> None:
     await users_data[message.from_user.id]['message_data'].delete()
     mp3_wait = await message.answer(text='Пожалуйста подождите...')
     await message_to_mp3(message)
+    await mp3_wait.delete()
     users_data[message.from_user.id]['message_data'] = await bot.send_audio(
         message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'),
         reply_markup=send_mp3_keyboard
     )
-    await mp3_wait.delete()
 
 
 # ----Translator-----
