@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from lexicon import LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_LANGUAGE_RU
+from lexicon import LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU
 import googletrans
 
 
@@ -51,8 +51,8 @@ def choice_language_small_keyboard():
     small_keyboard.row(*buttons_small_language, width=4)
     small_keyboard.row(
                        InlineKeyboardButton(text=LEXICON_RU['button_back'],
-                                            callback_data='button_back_language'),
-                       InlineKeyboardButton(text='Развернуть',
+                                            callback_data='button_no_message_mp3'),
+                       InlineKeyboardButton(text=LEXICON_TRANSLATOR_RU['unwrap_language_translator'],
                                             callback_data='unwrap_language_translator')
                        )
     small_keyboard.row(button_no)
@@ -71,8 +71,8 @@ def choice_language_keyboard():
     language_keyboard.row(*buttons_language, width=4)
     language_keyboard.row(
                        InlineKeyboardButton(text=LEXICON_RU['button_back'],
-                                            callback_data='button_back_language'),
-                       InlineKeyboardButton(text='Свернуть',
+                                            callback_data='button_no_message_mp3'),
+                       InlineKeyboardButton(text=LEXICON_TRANSLATOR_RU['collapse_language_translator'],
                                             callback_data='collapse_language_translator')
                        )
     language_keyboard.row(button_no)

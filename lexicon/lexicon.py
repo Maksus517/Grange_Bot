@@ -134,5 +134,11 @@ LEXICON_DEVELOPERS_RU: dict[str, str] = {
 LEXICON_TRANSLATOR_RU: dict[str, str] = {
     'translator_press_button': 'Выберите язык с которого будем переводить:',
 
-    'language_choice_one': 'Выберите язык на который будем переводить:'
+    'language_choice_one': 'Выберите язык на который будем переводить:',
+    
+    'input_text_translator': 'Введите текст для перевода:',
+
+    'unwrap_language_translator': 'Развернуть',
+
+    'collapse_language_translator': 'Свернуть'
 }
