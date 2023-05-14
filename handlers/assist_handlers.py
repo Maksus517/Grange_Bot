@@ -123,7 +123,6 @@ async def process_language_choice_two(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_TRANSLATOR_RU['input_text_translator'])
     users_data[callback.from_user.id]['user_status'] = 'translator'
-    print(users_data[callback.from_user.id]['data_list'])
 
 
 @router_sh.message(FilterTranslator(users_data))
