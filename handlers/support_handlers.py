@@ -16,7 +16,7 @@ async def process_back_answer(callback: CallbackQuery) -> None:
         text=LEXICON_RU['/assist_user'],
         reply_markup=developers_keyboard
     )
-    users_data[callback.from_user.id]['user_status'] = 'developers'
+    users_data[callback.from_user.id]['user_status'] = 'support'
 
 
 @router_dl.callback_query(Text(text=['button_back_to_comment']))
@@ -53,7 +53,7 @@ async def process_send_comment_answer(message: Message) -> None:
         text=LEXICON_DEVELOPERS_RU['comment_save'],
         reply_markup=developers_keyboard
     )
-    users_data[message.from_user.id]['user_status'] = 'developers'
+    users_data[message.from_user.id]['user_status'] = 'support'
 
 
 @router_dl.message(FilterCommentWait(users_data))

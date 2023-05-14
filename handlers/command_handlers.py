@@ -81,14 +81,14 @@ async def process_support_command(message: Message) -> None:
         )
 
 
-@router_ch.message(Command(commands=['developers']))
+@router_ch.message(Command(commands=['support']))
 async def process_developers_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
         await users_data[message.from_user.id]['message_data'].delete()
     if message.from_user.id in users_data:
-        users_data[message.from_user.id]['user_status'] = 'developers'
+        users_data[message.from_user.id]['user_status'] = 'support'
         users_data[message.from_user.id]['message_data'] = await message.answer(
-            text=LEXICON_RU['/developers'],
+            text=LEXICON_RU['/support'],
             reply_markup=developers_keyboard
         )
     else:
