@@ -57,8 +57,8 @@ async def process_leave_mp3_press_button(callback: CallbackQuery) -> None:
 @router_sh.message(FilterMessageMp3(users_data))
 async def process_send_mp3_answer(message: Message, bot: Bot) -> None:
     await users_data[message.from_user.id]['message_data'].delete()
-    await message_to_mp3(message)
     mp3_wait = await message.answer(text='Пожалуйста подождите...')
+    await message_to_mp3(message)
     users_data[message.from_user.id]['message_data'] = await bot.send_audio(
         message.from_user.id, FSInputFile(f'voice from {message.from_user.id}.mp3'),
         reply_markup=send_mp3_keyboard
