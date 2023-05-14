@@ -140,5 +140,9 @@ LEXICON_TRANSLATOR_RU: dict[str, str] = {
 
     'unwrap_language_translator': 'Развернуть',
 
-    'collapse_language_translator': 'Свернуть'
+    'collapse_language_translator': 'Свернуть',
+
+    'again_translator_press_button': 'Хотите перевести что-то еще?',
+
+    'again_translator_button': 'Еще!'
 }

@@ -8,7 +8,7 @@ from data import users_data
 from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
 from services import message_to_mp3, text_translator
 from keyboards import (support_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
-                       choice_language_small_keyboard, choice_language_keyboard)
+                       choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button)
 
 
 router_sh = Router()
@@ -75,14 +75,46 @@ async def process_translator_press_button(callback: CallbackQuery) -> None:
     )
 
 
+@router_sh.callback_query(Text(text=['unwrap_language_translator']), FilterLanguageChoiceOne(users_data))
+async def process_unwrap_language_press_button_one(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['translator_press_button'],
+        reply_markup=choice_language_keyboard()
+    )
+
+
+@router_sh.callback_query(Text(text=['collapse_language_translator']), FilterLanguageChoiceOne(users_data))
+async def process_collapse_language_press_button_one(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['translator_press_button'],
+        reply_markup=choice_language_small_keyboard()
+    )
+
+
 @router_sh.callback_query(FilterLanguageChoiceOne(users_data))
 async def process_language_choice_one(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'language_choice_two'
     users_data[callback.from_user.id]['data_list'] = [callback.data]
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_TRANSLATOR_RU['language_choice_one'],
-        reply_markup=choice_language_small_keyboard())
-    users_data[callback.from_user.id]['user_status'] = 'language_choice_two'
-    print(users_data[callback.from_user.id]['data_list'])
+        reply_markup=choice_language_small_keyboard()
+    )
+
+
+@router_sh.callback_query(Text(text=['unwrap_language_translator']), FilterLanguageChoiceTwo(users_data))
+async def process_unwrap_language_press_button_two(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['language_choice_one'],
+        reply_markup=choice_language_keyboard()
+    )
+
+
+@router_sh.callback_query(Text(text=['collapse_language_translator']), FilterLanguageChoiceTwo(users_data))
+async def process_collapse_language_press_button_two(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['language_choice_one'],
+        reply_markup=choice_language_small_keyboard()
+    )
 
 
 @router_sh.callback_query(FilterLanguageChoiceTwo(users_data))
@@ -91,7 +123,6 @@ async def process_language_choice_two(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_TRANSLATOR_RU['input_text_translator'])
     users_data[callback.from_user.id]['user_status'] = 'translator'
-    print(users_data[callback.from_user.id]['data_list'])
 
 
 @router_sh.message(FilterTranslator(users_data))
@@ -101,6 +132,14 @@ async def process_translation_answer(message: Message) -> None:
                                               users_data[message.from_user.id]['data_list'][0],
                                               users_data[message.from_user.id]['data_list'][1]))
     users_data[message.from_user.id]['user_status'] = 'assist'
-    await message.answer()
+    await message.answer(text=LEXICON_TRANSLATOR_RU['again_translator_press_button'],
+                         reply_markup=again_translator_press_button)
 
 
+@router_sh.callback_query(Text(text=['again_translator_button']))
+async def process_again_translator_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'language_choice_one'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_TRANSLATOR_RU['translator_press_button'],
+        reply_markup=choice_language_small_keyboard()
+    )

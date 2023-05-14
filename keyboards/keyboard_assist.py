@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from lexicon import LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU
+from lexicon import LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU, LEXICON_LANGUAGE_RU
 import googletrans
 
 
@@ -46,7 +46,7 @@ def choice_language_small_keyboard():
     for callback_small, text_small in LEXICON_LANGUAGE_SMALL_RU.items():
         buttons_small_language.append(
             InlineKeyboardButton(text=text_small,
-                                 callback_data=callback_small, width=4)
+                                 callback_data=callback_small)
         )
     small_keyboard.row(*buttons_small_language, width=4)
     small_keyboard.row(
@@ -63,10 +63,10 @@ def choice_language_keyboard():
     language_keyboard: InlineKeyboardBuilder = InlineKeyboardBuilder()
     buttons_language: list[InlineKeyboardButton] = []
 
-    for callback, text in googletrans.LANGUAGES.items():
+    for callback, text in LEXICON_LANGUAGE_RU.items():
         buttons_language.append(
             InlineKeyboardButton(text=text,
-                                 callback_data=callback, width=5)
+                                 callback_data=callback)
         )
     language_keyboard.row(*buttons_language, width=4)
     language_keyboard.row(
@@ -76,6 +76,14 @@ def choice_language_keyboard():
                                             callback_data='collapse_language_translator')
                        )
     language_keyboard.row(button_no)
-    return language_keyboard
+    return language_keyboard.as_markup()
 
 
+again_translator_button: InlineKeyboardButton = InlineKeyboardButton(
+    text=LEXICON_TRANSLATOR_RU['again_translator_button'],
+    callback_data='again_translator_button'
+)
+
+again_translator_press_button: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[again_translator_button],
+                                                                                            [button_back],
+                                                                                            [button_no]])
