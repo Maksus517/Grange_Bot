@@ -7,7 +7,7 @@ from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU
 from data import users_data
 from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
 from services import message_to_mp3, text_translator
-from keyboards import (support_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
+from keyboards import (assist_user_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
                        choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button)
 
 
@@ -30,7 +30,7 @@ async def process_message_mp3_answer(callback: CallbackQuery) -> None:
 async def process_message_mp3_press_back_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_RU['/assist_user'],
-        reply_markup=support_keyboard
+        reply_markup=assist_user_keyboard
     )
     users_data[callback.from_user.id]['user_status'] = 'assist'
 
@@ -42,7 +42,7 @@ async def process_leave_mp3_press_button(callback: CallbackQuery, bot: Bot) -> N
         reply_markup=None)
     await users_data[callback.from_user.id]['message_data'].delete()
     await callback.message.answer(text=LEXICON_RU['/assist_user'],
-                                  reply_markup=support_keyboard)
+                                  reply_markup=assist_user_keyboard)
     os.remove(f'voice from {callback.from_user.id}.mp3')
 
 
@@ -50,7 +50,7 @@ async def process_leave_mp3_press_button(callback: CallbackQuery, bot: Bot) -> N
 async def process_leave_mp3_press_button(callback: CallbackQuery) -> None:
     await users_data[callback.from_user.id]['message_data'].delete()
     await callback.message.answer(text=LEXICON_RU['/assist_user'],
-                                  reply_markup=support_keyboard)
+                                  reply_markup=assist_user_keyboard)
     os.remove(f'voice from {callback.from_user.id}.mp3')
 
 
