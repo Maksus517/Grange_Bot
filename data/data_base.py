@@ -55,7 +55,7 @@ class DataBase:
                 users_data[i[0]].setdefault('counter', 0)
                 users_data[i[0]].setdefault('message_data', None)
                 users_data[i[0]].setdefault('data_list', [])
-            print(users_data)
+
         if self.connection:
             self.connection.close()
 
