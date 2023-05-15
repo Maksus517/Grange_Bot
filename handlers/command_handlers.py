@@ -3,7 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, FSInputFile
 
 from lexicon import LEXICON_RU
-from keyboards import info_keyboard, support_keyboard, developers_keyboard
+from keyboards import info_keyboard, support_keyboard
 from data import users_data, DataBase
 
 
@@ -88,7 +88,7 @@ async def process_developers_command(message: Message) -> None:
         users_data[message.from_user.id]['user_status'] = 'support'
         users_data[message.from_user.id]['message_data'] = await message.answer(
             text=LEXICON_RU['/support'],
-            reply_markup=developers_keyboard
+            reply_markup=support_keyboard
         )
     else:
         users_data[message.from_user.id]['message_data'] = await message.answer(
