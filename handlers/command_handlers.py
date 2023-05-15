@@ -17,8 +17,7 @@ async def process_start_command(message: Message) -> None:
                                             'user_status': 'chat',
                                             'counter': 0,
                                             'message_data': None,
-                                            'data_list': [],
-                                            'user_premium': False}
+                                            'data_list': []}
         data_base: DataBase = DataBase(message)
         await data_base.insert_user_data()
     users_data[message.from_user.id]['user_status'] = 'chat'

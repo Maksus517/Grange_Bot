@@ -2,7 +2,9 @@ import psycopg2
 from aiogram.types import Message
 from config_data import load_config, Config
 
+
 users_data: dict[int, dict[str, str | int | list | bool | Message | None]] = {}
+user_id_premium: list = []
 
 
 class DataBase:
@@ -19,10 +21,9 @@ class DataBase:
     async def insert_user_data(self) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(
-                f"""INSERT INTO users (id_user, user_name, user_premium) VALUES
+                f"""INSERT INTO users (id_user, user_name) VALUES
                 ({self.message.from_user.id},
-                '{self.message.from_user.first_name}',
-                'False')"""
+                '{self.message.from_user.first_name}')"""
             )
         self.connection.commit()
 
@@ -45,15 +46,16 @@ class DataBase:
     def select_uses_data(self) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(
-                """SELECT id_user, user_name, user_premium FROM users"""
+                """SELECT id_user, user_name FROM users"""
             )
             for i in cursor.fetchall():
                 users_data.setdefault(int(i[0]), {})
                 users_data[i[0]].setdefault('user_name', str(i[1]))
                 users_data[i[0]].setdefault('user_status', 'chat')
-                users_data[i[0]].setdefault('user_premium', bool(i[2]))
+                users_data[i[0]].setdefault('counter', 0)
                 users_data[i[0]].setdefault('message_data', None)
-
+                users_data[i[0]].setdefault('data_list', [])
+            print(users_data)
         if self.connection:
             self.connection.close()
 
