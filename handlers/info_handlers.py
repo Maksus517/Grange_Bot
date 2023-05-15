@@ -3,7 +3,7 @@ from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
 from lexicon import LEXICON_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU, LEXICON_INFO_RU
-from services import get_wiki, get_weather, news_parser, joke_pars
+from services import get_wiki, get_weather, ria_news_parser, joke_pars
 from data import users_data
 from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
@@ -149,7 +149,7 @@ async def process_open_weather_answer(message: Message) -> None:
 async def process_news_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['user_status'] = 'news'
     users_data[callback.from_user.id]['counter'] = 0
-    users_data[callback.from_user.id]['data_list'] = await news_parser()
+    users_data[callback.from_user.id]['data_list'] = await ria_news_parser()
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=users_data[callback.from_user.id]['data_list'][users_data[callback.from_user.id]['counter']],
         reply_markup=news_press_button_keyboard

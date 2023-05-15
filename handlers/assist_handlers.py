@@ -6,7 +6,7 @@ import os
 from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU
 from data import users_data
 from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
-from services import message_to_mp3, text_translator
+from services import message_to_mp3, text_translator, message_to_voice
 from keyboards import (support_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
                        choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button)
 

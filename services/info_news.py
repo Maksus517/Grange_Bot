@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup as BS
-import asyncio
+import requests
 import aiohttp
 
 
-URL = 'https://ria.ru/world/'
+URL_RIA: str = 'https://ria.ru/world/'
 
 
 async def fetch(session, url) -> str:
@@ -11,9 +11,9 @@ async def fetch(session, url) -> str:
         return await response.read()
 
 
-async def news_parser(url: str = URL) -> list:
+async def ria_news_parser(url_ria: str = URL_RIA) -> list:
     async with aiohttp.ClientSession() as session:
-        html = await fetch(session, url)
+        html = await fetch(session, url_ria)
         soup = BS(html, 'html.parser')
         post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
         news_list = []
