@@ -2,6 +2,8 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from lexicon import LEXICON_RU, LEXICON_GAMES_RU
 
 
+# Games keyboard
+
 button_arcade_games: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_GAMES_RU['arcade_games'],
                                                                  callback_data='arcade_games')
 
@@ -15,3 +17,7 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
 game_genre_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_arcade_games,
                                                                                    button_rpg_games],
                                                                                   [button_no]])
+
+
+# Arcade keyboard
+

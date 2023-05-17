@@ -48,6 +48,7 @@ async def process_help_command(message: Message) -> None:
         )
 
 
+# В разработке
 @router_ch.message(Command(commands=['games']))
 async def process_game_command(message: Message) -> None:
     if users_data[message.from_user.id]['message_data']:
@@ -55,7 +56,7 @@ async def process_game_command(message: Message) -> None:
     if message.from_user.id in users_data:
         users_data[message.from_user.id]['message_data'] = await message.answer(
             text=LEXICON_RU['/games'],
-            reply_markup=game_genre_keyboard
+            # reply_markup=game_genre_keyboard
         )
         users_data[message.from_user.id]['user_status'] = 'games'
     else:
