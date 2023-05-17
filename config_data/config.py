@@ -26,7 +26,12 @@ class TgBot:
 
 
 class Config:
-    def __init__(self, tg_bot: TgBot, open_weather: OpenWeather, open_ai: OpenAI, data_base: DataBase) -> None:
+    def __init__(
+            self, tg_bot: TgBot,
+            open_weather: OpenWeather,
+            open_ai: OpenAI,
+            data_base: DataBase,
+    ) -> None:
         self.tg_bot = tg_bot
         self.open_weather = open_weather
         self.open_ai = open_ai

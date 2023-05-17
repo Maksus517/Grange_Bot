@@ -3,7 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, FSInputFile
 
 from lexicon import LEXICON_RU
-from keyboards import info_keyboard, support_keyboard, assist_user_keyboard
+from keyboards import info_keyboard, support_keyboard, assist_user_keyboard, game_genre_keyboard
 from data import users_data, DataBase
 
 
@@ -42,6 +42,22 @@ async def process_help_command(message: Message) -> None:
         users_data[message.from_user.id]['message_data'] = await message.answer_photo(
             photo=photo,
             caption=LEXICON_RU['/help'])
+    else:
+        users_data[message.from_user.id]['message_data'] = await message.answer(
+            text='Отправьте команду /start'
+        )
+
+
+@router_ch.message(Command(commands=['games']))
+async def process_game_command(message: Message) -> None:
+    if users_data[message.from_user.id]['message_data']:
+        await users_data[message.from_user.id]['message_data'].delete()
+    if message.from_user.id in users_data:
+        users_data[message.from_user.id]['message_data'] = await message.answer(
+            text=LEXICON_RU['/games'],
+            reply_markup=game_genre_keyboard
+        )
+        users_data[message.from_user.id]['user_status'] = 'games'
     else:
         users_data[message.from_user.id]['message_data'] = await message.answer(
             text='Отправьте команду /start'
