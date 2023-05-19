@@ -96,3 +96,11 @@ class FilterKnbGame(BaseFilter):
 
     async def __call__(self, message: Message) -> bool:
         return self.users_data[message.from_user.id]['user_status'] == 'knb_game'
+
+
+class FilterGuessNumbersGame(BaseFilter):
+    def __init__(self, users_data: dict[int, dict]) -> None:
+        self.users_data = users_data
+
+    async def __call__(self, message: Message) -> bool:
+        return self.users_data[message.from_user.id]['user_status'] == 'guess_number_game'

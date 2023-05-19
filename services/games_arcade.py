@@ -19,3 +19,7 @@ async def get_winner(user_choice: str, bot_choice: str) -> str:
         return 'user_won'
     else:
         return 'bot_won'
+
+
+async def get_random_number() -> int:
+    return random.randint(1, 50)

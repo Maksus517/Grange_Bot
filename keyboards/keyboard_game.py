@@ -1,5 +1,8 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from lexicon import LEXICON_RU, LEXICON_GAMES_RU, LEXICON_ARCADE_GAMES_RU, LEXICON_KNB_GAME_RU
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+from lexicon import (LEXICON_RU, LEXICON_GAMES_RU, LEXICON_ARCADE_GAMES_RU,
+                     LEXICON_KNB_GAME_RU, LEXICON_GUESS_NUMBER_RU)
 
 
 # Games keyboard
@@ -61,3 +64,41 @@ game_knb_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
 
 game_knb_again_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_knb_again],
                                                                                       [button_back_game]])
+
+
+# Arcade random number game
+
+def choice_random_number_keyboard() -> InlineKeyboardMarkup:
+    numbers_keyboard: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    buttons_numbers: list[InlineKeyboardButton] = []
+
+    for number in range(1, 50):
+        buttons_numbers.append(
+            InlineKeyboardButton(text=number,
+                                 callback_data=number)
+        )
+    numbers_keyboard.row(*buttons_numbers, width=7)
+    numbers_keyboard.row(InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                              callback_data='button_back_game'))
+    return numbers_keyboard.as_markup()
+
+
+button_random_again: InlineKeyboardButton = InlineKeyboardButton(
+    text=LEXICON_GUESS_NUMBER_RU['button_guess_number_again'],
+    callback_data='button_guess_number_again'
+)
+button_statistics_guess_number: InlineKeyboardButton = InlineKeyboardButton(
+    text=LEXICON_GUESS_NUMBER_RU['statistics_guess_number'],
+    callback_data='statistics_guess_number'
+)
+
+game_random_number_again_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_random_again],
+                     [button_statistics_guess_number],
+                     [button_back_game]]
+)
+
+statistics_guess_number_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_random_again],
+                     [button_back_game]]
+)
