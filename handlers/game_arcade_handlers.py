@@ -151,7 +151,7 @@ async def process_statistics_guess_number_press_button(callback: CallbackQuery) 
 async def process_guess_number_answer(callback: CallbackQuery) -> None:
     if int(callback.data) == int(users_data[callback.from_user.id]
                                  ['games_data']['guess_number_game']['secret_number']):
-        await callback.message.edit_text(text='Ура!!! Вы угадали число!',
+        await callback.message.edit_text(text='😎 Ура!!! Вы угадали число!',
                                          reply_markup=game_random_number_again_keyboard)
         users_data[callback.from_user.id]['games_data']['guess_number_game']['total_games'] += 1
         users_data[callback.from_user.id]['games_data']['guess_number_game']['wins'] += 1
@@ -169,7 +169,7 @@ async def process_guess_number_answer(callback: CallbackQuery) -> None:
     if int(users_data[callback.from_user.id]['games_data']['guess_number_game']['attempts']) == 0:
         await callback.message.edit_text(
                 text=f"❗️ К сожалению, у вас больше не осталось "
-                f"попыток. Вы проиграли :(\n\nМое число "
+                f"попыток. 😔 Вы проиграли...\nМое число "
                 f"было {users_data[callback.from_user.id]['games_data']['guess_number_game']['secret_number']}",
                 reply_markup=game_random_number_again_keyboard)
         users_data[callback.from_user.id]['games_data']['guess_number_game']['total_games'] += 1
