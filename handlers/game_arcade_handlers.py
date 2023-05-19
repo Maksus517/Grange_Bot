@@ -1,6 +1,6 @@
 from aiogram import Router
-from aiogram.filters import Command, CommandStart, Text
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, FSInputFile
+from aiogram.filters import Text
+from aiogram.types import Message, CallbackQuery
 
 from services import get_bot_choice, get_winner
 from lexicon import LEXICON_ARCADE_GAMES_RU, LEXICON_RU, LEXICON_KNB_GAME_RU
@@ -68,7 +68,7 @@ async def process_knb_game_press_button(callback: CallbackQuery) -> None:
 @router_ar_gm.callback_query(Text(text=['statistics_knb']))
 async def process_statistics_knb_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
-        text=f"Всего игр сыграно:"
+        text=f"Всего игр сыграно: "
              f"{users_data[callback.from_user.id]['games_data']['knb_game']['total_games']}\n"
              f"Игр выиграно: {users_data[callback.from_user.id]['games_data']['knb_game']['wins']}",
         reply_markup=game_knb_keyboard
