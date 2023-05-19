@@ -4,8 +4,9 @@ from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, FSInputFi
 
 from services import get_bot_choice, get_winner
 from lexicon import LEXICON_ARCADE_GAMES_RU, LEXICON_RU, LEXICON_KNB_GAME_RU
-from keyboards import game_genre_keyboard, choice_arcade_game, game_knb_keyboard
+from keyboards import game_genre_keyboard, choice_arcade_game, game_knb_keyboard, game_knb_again_keyboard
 from data import users_data
+from filters import FilterKnbGame
 
 
 router_ar_gm: Router = Router()
@@ -74,6 +75,14 @@ async def process_statistics_knb_press_button(callback: CallbackQuery) -> None:
     )
 
 
+@router_ar_gm.callback_query(Text(text=['button_knb_again']))
+async def process_knb_again_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_KNB_GAME_RU['knb_press_button'],
+        reply_markup=game_knb_keyboard
+    )
+
+
 @router_ar_gm.callback_query(Text(text=['rock', 'paper', 'scissors']))
 async def process_game_button(callback: CallbackQuery):
     bot_choice = await get_bot_choice()
@@ -87,5 +96,14 @@ async def process_game_button(callback: CallbackQuery):
         text=f'{LEXICON_KNB_GAME_RU["bot_choice"]} '
              f'- {LEXICON_KNB_GAME_RU[bot_choice]}. '
              f'{LEXICON_KNB_GAME_RU[winner]}',
+        reply_markup=game_knb_again_keyboard
+    )
+
+
+@router_ar_gm.message(FilterKnbGame(users_data))
+async def process_kmb_game_error_answer(message: Message) -> None:
+    await users_data[message.from_user.id]['message_data'].delete()
+    users_data[message.from_user.id]['message_data'] = await message.answer(
+        text=LEXICON_KNB_GAME_RU['kmb_game_error'],
         reply_markup=game_knb_keyboard
     )

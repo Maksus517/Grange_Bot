@@ -34,8 +34,8 @@ button_guess_number_game: InlineKeyboardButton = InlineKeyboardButton(text=LEXIC
                                                                       callback_data='guess_number_game')
 
 
-choice_arcade_game: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_kmb_game,
-                                                                                  button_guess_number_game],
+choice_arcade_game: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_kmb_game],
+                                                                                 [button_guess_number_game],
                                                                                  [button_no,
                                                                                   button_back_games]])
 
@@ -47,8 +47,10 @@ button_scissors: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GA
                                                              callback_data='scissors')
 button_paper: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GAME_RU['paper'],
                                                           callback_data='paper')
-button_statistics_knb = InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GAME_RU['statistics_knb'],
-                                                                    callback_data='statistics_knb')
+button_statistics_knb: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GAME_RU['statistics_knb'],
+                                                                   callback_data='statistics_knb')
+button_knb_again: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GAME_RU['button_knb_again'],
+                                                              callback_data='button_knb_again')
 
 
 game_knb_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_rock,
@@ -56,3 +58,6 @@ game_knb_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
                                                                                  button_paper],
                                                                                 [button_back_game,
                                                                                  button_statistics_knb]])
+
+game_knb_again_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_knb_again],
+                                                                                      [button_back_game]])
