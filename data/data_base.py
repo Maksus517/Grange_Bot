@@ -3,7 +3,7 @@ from aiogram.types import Message
 from config_data import load_config, Config
 
 
-users_data: dict[int, dict[str, str | int | list | bool | Message | None]] = {}
+users_data: dict[int, dict[str, str | int | list | dict | bool | Message | None]] = {}
 user_id_premium: list = []
 
 
@@ -43,7 +43,7 @@ class DataBase:
         if self.connection:
             self.connection.close()
 
-    def select_uses_data(self) -> None:
+    def select_users_data(self) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(
                 """SELECT id_user, user_name FROM users"""
@@ -55,6 +55,7 @@ class DataBase:
                 users_data[i[0]].setdefault('counter', 0)
                 users_data[i[0]].setdefault('message_data', None)
                 users_data[i[0]].setdefault('data_list', [])
+                users_data[i[0]].setdefault('games_data', None)
 
         if self.connection:
             self.connection.close()

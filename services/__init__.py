@@ -5,3 +5,4 @@ from .ai_open_ai import *
 from .info_news import *
 from .info_joke import *
 from .assist_translator import *
+from .games_arcade import *

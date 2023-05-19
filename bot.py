@@ -4,7 +4,7 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from config_data import load_config, Config
-from handlers import router_ch, router_ih, router_ah, router_sh, router_dl, router_ai
+from handlers import router_ch, router_ih, router_ah, router_sh, router_dl, router_ai, router_ar_gm
 from keyboards import set_main_menu
 from data import load_data
 
@@ -21,7 +21,7 @@ async def main() -> None:
 
     logger.info('Starting bot')
 
-    load_data.select_uses_data()
+    load_data.select_users_data()
 
     config: Config = load_config()
 
@@ -34,6 +34,7 @@ async def main() -> None:
     dp.include_router(router_ih)
     dp.include_router(router_sh)
     dp.include_router(router_dl)
+    dp.include_router(router_ar_gm)
     dp.include_router(router_ai)
 
     await set_main_menu(bot)
