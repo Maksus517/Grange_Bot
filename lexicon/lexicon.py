@@ -112,6 +112,8 @@ LEXICON_ADMIN_RU: dict[str, str] = {
 
     'deleted_menu': 'Удалить кнопку меню',
 
+    'reload_bot': 'Перезагрузить бота',
+
     'no_button_admin': 'Выйти из админ панели',
 
     'no_text': 'Вы выши из админ панели'

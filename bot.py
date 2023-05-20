@@ -37,6 +37,7 @@ async def main() -> None:
     dp.include_router(router_ar_gm)
     dp.include_router(router_ai)
 
+    await bot.send_message(chat_id=int(*config.tg_bot.admin_ids), text='Я перезагрузилсо!')
     await set_main_menu(bot)
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
