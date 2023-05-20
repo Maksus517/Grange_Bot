@@ -122,7 +122,8 @@ def calculator_keyboard() -> InlineKeyboardMarkup:
         InlineKeyboardButton(text=' ➕ ', callback_data='+')
     )
     calculator_keyboard_build.row(
-        InlineKeyboardButton(text='   ', callback_data='no'),
+        InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                             callback_data='button_no_message_mp3'),
         InlineKeyboardButton(text=' 0 ', callback_data='0'),
         InlineKeyboardButton(text=' . ', callback_data='.'),
         InlineKeyboardButton(text=' 🟰 ', callback_data='=')
