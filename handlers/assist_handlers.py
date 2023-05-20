@@ -8,7 +8,8 @@ from data import users_data
 from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
 from services import message_to_mp3, text_translator
 from keyboards import (assist_user_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
-                       choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button)
+                       choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button,
+                       calculator_keyboard)
 
 
 router_sh = Router()
@@ -149,4 +150,15 @@ async def process_again_translator_press_button(callback: CallbackQuery) -> None
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_TRANSLATOR_RU['translator_press_button'],
         reply_markup=choice_language_small_keyboard()
+    )
+
+
+# Calculator handlers
+
+@router_sh.callback_query(Text(text=['calculator']))
+async def process_calculator_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'calculator'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text='______________________________0',
+        reply_markup=calculator_keyboard()
     )
