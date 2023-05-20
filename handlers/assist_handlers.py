@@ -5,7 +5,8 @@ import os
 
 from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU
 from data import users_data
-from filters import FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo, FilterTranslator
+from filters import (FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo,
+                     FilterTranslator, FilterCalculatorAssist)
 from services import message_to_mp3, text_translator
 from keyboards import (assist_user_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
                        choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button,
@@ -155,10 +156,54 @@ async def process_again_translator_press_button(callback: CallbackQuery) -> None
 
 # Calculator handlers
 
-@router_sh.callback_query(Text(text=['calculator']))
+@router_sh.callback_query(Text(text=['no']))
+async def process_calculator_no_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=''.join(users_data[callback.from_user.id]['data_list']),
+        reply_markup=calculator_keyboard()
+    )
+
+
+@router_sh.callback_query(Text(text=['calculator', 'c']))
 async def process_calculator_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['user_status'] = 'calculator'
+    users_data[callback.from_user.id]['data_list'] = []
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
-        text='______________________________0',
+        text='0',
+        reply_markup=calculator_keyboard()
+    )
+
+
+@router_sh.callback_query(FilterCalculatorAssist(users_data) and Text(text=['<-']))
+async def process_calculator_delete_data(callback: CallbackQuery) -> None:
+    try:
+        del users_data[callback.from_user.id]['data_list'][-1]
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=''.join(users_data[callback.from_user.id]['data_list']),
+            reply_markup=calculator_keyboard()
+        )
+    except:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text='0',
+            reply_markup=calculator_keyboard()
+        )
+
+
+@router_sh.callback_query(Text(text=['=']))
+async def process_calculator_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'calculator'
+    result = str(eval(''.join(users_data[callback.from_user.id]['data_list'])))
+    users_data[callback.from_user.id]['data_list'] = [result]
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=''.join(users_data[callback.from_user.id]['data_list']),
+        reply_markup=calculator_keyboard()
+    )
+
+
+@router_sh.callback_query(FilterCalculatorAssist(users_data))
+async def process_calculator_data_append(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['data_list'].append(callback.data)
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=''.join(users_data[callback.from_user.id]['data_list']),
         reply_markup=calculator_keyboard()
     )
