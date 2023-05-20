@@ -158,7 +158,16 @@ async def process_again_translator_press_button(callback: CallbackQuery) -> None
 
 @router_sh.callback_query(Text(text=['no']))
 async def process_calculator_no_press_button(callback: CallbackQuery) -> None:
-    pass
+    try:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text='Это не кнопка...',
+            reply_markup=calculator_keyboard()
+        )
+    except:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text='Не жмите сюда, говорю же, это не кнопка...',
+            reply_markup=calculator_keyboard()
+        )
 
 
 @router_sh.callback_query(Text(text=['calculator', 'C']))
@@ -188,19 +197,70 @@ async def process_calculator_delete_data(callback: CallbackQuery) -> None:
 
 @router_sh.callback_query(Text(text=['=']))
 async def process_calculator_press_button(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['user_status'] = 'calculator'
-    result = str(eval(''.join(users_data[callback.from_user.id]['data_list'])))
-    users_data[callback.from_user.id]['data_list'] = [num for num in result]
-    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
-        text=''.join(users_data[callback.from_user.id]['data_list']),
-        reply_markup=calculator_keyboard()
-    )
+    try:
+        users_data[callback.from_user.id]['user_status'] = 'calculator'
+        result = eval(''.join(users_data[callback.from_user.id]['data_list']))
+        if type(result) == float:
+            result = round(result, 2)
+        users_data[callback.from_user.id]['data_list'] = [num for num in str(result)]
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=''.join(users_data[callback.from_user.id]['data_list']),
+            reply_markup=calculator_keyboard()
+        )
+    except ZeroDivisionError:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text='Делить на 0 нельзя...',
+            reply_markup=calculator_keyboard()
+        )
+        users_data[callback.from_user.id]['data_list'] = []
 
 
 @router_sh.callback_query(FilterCalculatorAssist(users_data))
 async def process_calculator_data_append(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['data_list'].append(callback.data)
-    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
-        text=''.join(users_data[callback.from_user.id]['data_list']),
-        reply_markup=calculator_keyboard()
-    )
+
+    if users_data[callback.from_user.id]['data_list']:
+        if callback.data in ['+', '-', '*', '/'] and \
+                users_data[callback.from_user.id]['data_list'][-1] in ['+', '-', '*', '/']:
+            users_data[callback.from_user.id]['data_list'][-1] = callback.data
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text=''.join(users_data[callback.from_user.id]['data_list']),
+                reply_markup=calculator_keyboard()
+            )
+        else:
+            users_data[callback.from_user.id]['data_list'].append(callback.data)
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text=''.join(users_data[callback.from_user.id]['data_list']),
+                reply_markup=calculator_keyboard()
+            )
+    else:
+        if callback.data not in ['0', '+', '.', '*', '/']:
+            users_data[callback.from_user.id]['data_list'].append(callback.data)
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text=''.join(users_data[callback.from_user.id]['data_list']),
+                reply_markup=calculator_keyboard()
+            )
+        elif callback.data == '0':
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text='00',
+                reply_markup=calculator_keyboard()
+            )
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text='0',
+                reply_markup=calculator_keyboard()
+            )
+        elif callback.data == '.':
+            users_data[callback.from_user.id]['data_list'].append('0')
+            users_data[callback.from_user.id]['data_list'].append(callback.data)
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text=''.join(users_data[callback.from_user.id]['data_list']),
+                reply_markup=calculator_keyboard()
+            )
+        else:
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text=callback.data,
+                reply_markup=calculator_keyboard()
+            )
+            users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+                text='0',
+                reply_markup=calculator_keyboard()
+            )
