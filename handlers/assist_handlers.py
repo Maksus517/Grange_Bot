@@ -164,7 +164,7 @@ async def process_calculator_no_press_button(callback: CallbackQuery) -> None:
     )
 
 
-@router_sh.callback_query(Text(text=['calculator', 'c']))
+@router_sh.callback_query(Text(text=['calculator', 'C']))
 async def process_calculator_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['user_status'] = 'calculator'
     users_data[callback.from_user.id]['data_list'] = []
