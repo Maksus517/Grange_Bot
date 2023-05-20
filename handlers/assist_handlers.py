@@ -158,10 +158,7 @@ async def process_again_translator_press_button(callback: CallbackQuery) -> None
 
 @router_sh.callback_query(Text(text=['no']))
 async def process_calculator_no_press_button(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
-        text=''.join(users_data[callback.from_user.id]['data_list']),
-        reply_markup=calculator_keyboard()
-    )
+    pass
 
 
 @router_sh.callback_query(Text(text=['calculator', 'C']))
@@ -193,7 +190,7 @@ async def process_calculator_delete_data(callback: CallbackQuery) -> None:
 async def process_calculator_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['user_status'] = 'calculator'
     result = str(eval(''.join(users_data[callback.from_user.id]['data_list'])))
-    users_data[callback.from_user.id]['data_list'] = [result]
+    users_data[callback.from_user.id]['data_list'] = [num for num in result]
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=''.join(users_data[callback.from_user.id]['data_list']),
         reply_markup=calculator_keyboard()
