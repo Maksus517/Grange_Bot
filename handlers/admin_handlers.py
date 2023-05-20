@@ -8,6 +8,7 @@ from keyboards import admin_keyboard
 from config_data import load_config
 from data import users_data
 import os
+import time
 
 router_ah = Router()
 
@@ -42,8 +43,9 @@ async def process_stop_answer(callback: CallbackQuery) -> None:
 
 @router_ah.callback_query(Text(text=['reload_bot']), IsAdmin(admin_list))
 async def process_reload_server_press_button(callback: CallbackQuery) -> None:
-    os.system('cd /home/maksus/Grange_Bot')
     os.system('sudo systemctl restart Grange_Bot')
+    time.sleep(2)
+    os.system('Phantom41142')
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text='Команда на перезагрузку бота, отправлена на сервер',
         reply_markup=admin_keyboard
