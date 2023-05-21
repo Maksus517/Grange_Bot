@@ -8,7 +8,6 @@ from keyboards import admin_keyboard
 from config_data import load_config
 from data import users_data
 import os
-import time
 
 router_ah = Router()
 

@@ -19,6 +19,11 @@ class OpenWeather:
         self.token = token
 
 
+class VkApi:
+    def __init__(self, token: str) -> None:
+        self.token = token
+
+
 class TgBot:
     def __init__(self, token: str, admin_ids: list[int]) -> None:
         self.token = token
@@ -30,12 +35,14 @@ class Config:
             self, tg_bot: TgBot,
             open_weather: OpenWeather,
             open_ai: OpenAI,
-            data_base: DataBase,
+            vk_api: VkApi,
+            data_base: DataBase
     ) -> None:
         self.tg_bot = tg_bot
         self.open_weather = open_weather
         self.open_ai = open_ai
         self.data_base = data_base
+        self.vk_api = vk_api
 
 
 def load_config(path: str | None = None) -> Config:
@@ -45,6 +52,7 @@ def load_config(path: str | None = None) -> Config:
                                admin_ids=list(map(int, env.list('ADMIN_IDS')))),
                   open_weather=OpenWeather(token=env('OPEN_WEATHER_TOKEN')),
                   open_ai=OpenAI(token=env('OPENAI_KEY')),
+                  vk_api=VkApi(token=env('VK_API_KEY')),
                   data_base=DataBase(host=env('HOST'),
                                      user=env('USER'),
                                      password=env('PASSWORD'),
