@@ -3,14 +3,14 @@ from aiogram.filters import Text
 from aiogram.types import Message, FSInputFile, CallbackQuery
 import os
 
-from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU
+from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU, LEXICON_CRYPTO_CURRENCIES_RU
 from data import users_data
 from filters import (FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo,
-                     FilterTranslator, FilterCalculatorAssist)
-from services import message_to_mp3, text_translator
+                     FilterTranslator, FilterCalculatorAssist, FilterCryptoCurrenciesAssist)
+from services import message_to_mp3, text_translator, get_ticker
 from keyboards import (assist_user_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
                        choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button,
-                       calculator_keyboard)
+                       calculator_keyboard, crypto_currencies_keyboard)
 
 
 router_sh = Router()
@@ -264,3 +264,22 @@ async def process_calculator_data_append(callback: CallbackQuery) -> None:
                 text='0',
                 reply_markup=calculator_keyboard()
             )
+
+
+# Cripto currencies
+
+@router_sh.callback_query(Text(text=['crypto_currencies']))
+async def process_crypro_currencies_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'crypto_currencies'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_CRYPTO_CURRENCIES_RU['crypro_currencies_press_button'],
+        reply_markup=crypto_currencies_keyboard()
+    )
+
+
+@router_sh.callback_query(FilterCryptoCurrenciesAssist(users_data))
+async def process_crypro_currencies_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=get_ticker(callback.data),
+        reply_markup=crypto_currencies_keyboard()
+    )

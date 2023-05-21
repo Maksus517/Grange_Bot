@@ -1,14 +1,14 @@
-LEXICON_CRIPTO_RU: dict = {
-    'Bitcoin': 'btc',
-    'Ethereum': 'eth',
-    'Ripple': 'xrp',
-    'Eos': 'eos',
-    'Litecoin': 'ltc',
-    'TRON': 'trx',
-    'Tether': 'usdt',
-    'Dash': 'dash',
-    'NEM': 'xem',
-    'VeChain': 'ven',
-    'Ethereum Classic': 'etc',
-    'OmiseGO': 'omg'
+LEXICON_CRIPTO_RU: dict[str, str] = {
+    'btc': 'Bitcoin',
+    'eth': 'Ethereum',
+    'xrp': 'Ripple',
+    'eos': 'Eos',
+    'ltc': 'Litecoin',
+    'trx': 'TRON',
+    'usdt': 'Tether',
+    'dash': 'Dash',
+    'xem': 'NEM',
+    'ven': 'VeChain',
+    'etc': 'Ethereum Classic',
+    'omg': 'OmiseGO'
 }

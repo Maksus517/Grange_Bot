@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from lexicon import LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU, LEXICON_LANGUAGE_RU
+from lexicon import (LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU,
+                     LEXICON_LANGUAGE_RU, LEXICON_CRIPTO_RU)
 
 
 # -----Support_keyboard-----
@@ -14,6 +15,9 @@ button_translator: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['
 button_calculator: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['calculator'],
                                                                callback_data='calculator')
 
+button_crypto_currencies: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['crypto_currencies'],
+                                                                      callback_data='crypto_currencies')
+
 button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
                                                        callback_data='button_no_info')
 
@@ -21,6 +25,7 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
 assist_user_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_message_mp3],
                                                                                    [button_translator],
                                                                                    [button_calculator],
+                                                                                   [button_crypto_currencies],
                                                                                    [button_no]])
 
 
@@ -130,6 +135,20 @@ def calculator_keyboard() -> InlineKeyboardMarkup:
     )
     return calculator_keyboard_build.as_markup()
 
+
 # Crypto currencies
 
+def crypto_currencies_keyboard() -> InlineKeyboardMarkup:
+    crypto_keyboard: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    buttons_crypto: list[InlineKeyboardButton] = []
 
+    for callback_data, name in LEXICON_CRIPTO_RU.items():
+        buttons_crypto.append(
+            InlineKeyboardButton(text=name,
+                                 callback_data=callback_data)
+        )
+    crypto_keyboard.row(*buttons_crypto, width=4)
+    crypto_keyboard.row(
+                       InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                            callback_data='button_no_message_mp3'))
+    return crypto_keyboard.as_markup()
