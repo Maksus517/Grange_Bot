@@ -130,3 +130,6 @@ def calculator_keyboard() -> InlineKeyboardMarkup:
     )
     return calculator_keyboard_build.as_markup()
 
+# Crypto currencies
+
+
