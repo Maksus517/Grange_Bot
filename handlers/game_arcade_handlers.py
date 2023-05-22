@@ -2,11 +2,11 @@ from aiogram import Router
 from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
-from services import get_bot_choice, get_winner, get_random_number
+from services import get_bot_choice, get_winner, get_random_number, get_map_cell, get_map_str
 from lexicon import LEXICON_ARCADE_GAMES_RU, LEXICON_RU, LEXICON_KNB_GAME_RU, LEXICON_GUESS_NUMBER_RU
 from keyboards import (game_genre_keyboard, choice_arcade_game, game_knb_keyboard,
                        game_knb_again_keyboard, choice_random_number_keyboard, game_random_number_again_keyboard,
-                       statistics_guess_number_keyboard)
+                       statistics_guess_number_keyboard, maze_game_keyboard)
 from data import users_data
 from filters import FilterKnbGame, FilterGuessNumbersGame
 
@@ -181,4 +181,19 @@ async def process_guess_number_error_answer(message: Message) -> None:
     users_data[message.from_user.id]['message_data'] = await message.answer(
         text=LEXICON_KNB_GAME_RU['guess_number_error'],
         reply_markup=game_random_number_again_keyboard
+    )
+
+
+@router_ar_gm.callback_query(Text(text=['maze_game']))
+async def process_maze_game_press_button(callback: CallbackQuery):
+    users_data[callback.from_user.id]['user_status'] = 'maze_game'
+    users_data[callback.from_user.id]['data_list'] = [8, 8]
+    map_cell = get_map_cell(users_data[callback.from_user.id]['data_list'][0],
+                            users_data[callback.from_user.id]['data_list'][1])
+    users_data[callback.from_user.id]['games_data'] = {'maze_game': {'map': map_cell,
+                                                                     'x': 0,
+                                                                     'y': 0}}
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=get_map_str(map_cell, (0, 0)),
+        reply_markup=maze_game_keyboard
     )

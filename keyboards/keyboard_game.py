@@ -36,9 +36,13 @@ button_kmb_game: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_ARCADE
 button_guess_number_game: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_ARCADE_GAMES_RU['guess_number_game'],
                                                                       callback_data='guess_number_game')
 
+button_maze_game: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_ARCADE_GAMES_RU['maze_game'],
+                                                              callback_data='maze_game')
+
 
 choice_arcade_game: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_kmb_game],
                                                                                  [button_guess_number_game],
+                                                                                 [button_maze_game],
                                                                                  [button_no,
                                                                                   button_back_games]])
 
@@ -101,4 +105,15 @@ game_random_number_again_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
 statistics_guess_number_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_random_again],
                      [button_back_game]]
+)
+
+
+button_maze_left: InlineKeyboardButton = InlineKeyboardButton(text='←', callback_data='left')
+button_maze_up: InlineKeyboardButton = InlineKeyboardButton(text='↑', callback_data='up')
+button_maze_down: InlineKeyboardButton = InlineKeyboardButton(text='↓', callback_data='down')
+button_maze_right: InlineKeyboardButton = InlineKeyboardButton(text='→', callback_data='right')
+
+maze_game_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_maze_up],
+                     [button_maze_left, button_maze_down, button_maze_right]]
 )
