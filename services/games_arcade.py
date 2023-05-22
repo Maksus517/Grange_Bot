@@ -27,7 +27,7 @@ async def get_random_number() -> int:
 
 # Maze game
 
-def get_map_cell(cols, rows):
+async def get_map_cell(cols, rows) -> list:
     class Cell:
         def __init__(self, x, y):
             self.x = x
@@ -58,7 +58,6 @@ def get_map_cell(cols, rows):
                 neighbours.append(left)
 
             return random.choice(neighbours) if neighbours else False
-
 
     def remove_walls(current_cell, next_cell):
         dx = current_cell.x - next_cell.x
@@ -112,7 +111,8 @@ def get_map_cell(cols, rows):
     return [check_wall(grid_cell, x, y) for y in range(rows * 2 - 1) for x in range(cols * 2 - 1)]
 
 
-def get_map_str(map_cell, player):
+def get_map_str(map_cell, player) -> str:
+    rows, cols = 8, 8
     map_str = ""
     for y in range(rows * 2 - 1):
         for x in range(cols * 2 - 1):
@@ -120,9 +120,10 @@ def get_map_str(map_cell, player):
                 map_str += "⬛"
             elif (x, y) == player:
                 map_str += "🔴"
+            elif (x, y) == (random.choice(range(15)), random.choice(range(15))):
+                map_str += "🔲"
             else:
                 map_str += "⬜"
+
         map_str += "\n"
-
     return map_str
-

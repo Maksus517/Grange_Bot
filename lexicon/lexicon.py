@@ -177,7 +177,7 @@ LEXICON_ARCADE_GAMES_RU: dict[str, str] = {
     'knb_game': '🤜🤛 Камень, ножницы, бумага',
     'guess_number_game': '🤔 Угадай число',
     'KNB_button': '🤜🤛 Камень, ножницы, бумага',
-    'maze_game': 'Лабиринт'
+    'maze_game': '🌌 Лабиринт'
 }
 
 LEXICON_KNB_GAME_RU: dict[str, str] = {

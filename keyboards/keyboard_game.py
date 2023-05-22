@@ -115,5 +115,6 @@ button_maze_right: InlineKeyboardButton = InlineKeyboardButton(text='→', callb
 
 maze_game_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_maze_up],
-                     [button_maze_left, button_maze_down, button_maze_right]]
+                     [button_maze_left, button_maze_down, button_maze_right],
+                     [button_back_game]]
 )
