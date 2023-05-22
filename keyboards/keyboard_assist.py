@@ -22,10 +22,10 @@ button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_n
                                                        callback_data='button_no_info')
 
 
-assist_user_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_message_mp3],
-                                                                                   [button_translator],
-                                                                                   [button_calculator],
-                                                                                   [button_crypto_currencies],
+assist_user_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_message_mp3,
+                                                                                   button_translator],
+                                                                                   [button_calculator,
+                                                                                   button_crypto_currencies],
                                                                                    [button_no]])
 
 
