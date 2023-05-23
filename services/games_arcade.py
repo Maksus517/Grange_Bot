@@ -119,7 +119,7 @@ def get_map_str(map_cell, player) -> str:
             if map_cell[x + y * (cols * 2 - 1)]:
                 map_str += "⬛"
             elif (x, y) == player:
-                map_str += "🔴"
+                map_str += "🟢"
             elif (x, y) == (14, 14):
                 map_str += "🔲"
             else:

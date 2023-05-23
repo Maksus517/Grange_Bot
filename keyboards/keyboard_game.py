@@ -112,9 +112,17 @@ button_maze_left: InlineKeyboardButton = InlineKeyboardButton(text='←', callba
 button_maze_up: InlineKeyboardButton = InlineKeyboardButton(text='↑', callback_data='up')
 button_maze_down: InlineKeyboardButton = InlineKeyboardButton(text='↓', callback_data='down')
 button_maze_right: InlineKeyboardButton = InlineKeyboardButton(text='→', callback_data='right')
+button_maze_again: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_KNB_GAME_RU['button_knb_again'],
+                                                               callback_data='maze_again')
 
 maze_game_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_maze_up],
                      [button_maze_left, button_maze_down, button_maze_right],
+                     [button_back_game]]
+)
+
+
+maze_again_game_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_maze_again],
                      [button_back_game]]
 )

@@ -20,7 +20,7 @@ LEXICON_RU: dict[str, str] = {
 
     '/assist_user': '✅ Вы можете воспользоваться одной из функций, просто нажав на кнопу:',
 
-    '/games': 'В процессе разработки',
+    '/games': '⬇️ Выберите жанр игры:',
 
     '/support': '✅ Ты вы можете поддержать проект, оставить свой отзыв, комментарий, '
                 'предложения по улучшению проекта, его расширению',
@@ -205,4 +205,8 @@ LEXICON_GUESS_NUMBER_RU: dict[str, str] = {
 
 LEXICON_CRYPTO_CURRENCIES_RU: dict[str, str] = {
     'crypro_currencies_press_button': 'Выберите криптовалюту:'
+}
+
+LEXICON_MAZE_GAME_RU: dict[str, str] = {
+    'maze_win': 'Поздравляю, вы выиграли! Сыграем еще?'
 }
