@@ -27,7 +27,7 @@ async def get_random_number() -> int:
 
 # Maze game
 
-async def get_map_cell(cols, rows) -> list:
+async def get_map_cell(cols, rows) -> list[bool]:
     class Cell:
         def __init__(self, x, y):
             self.x = x
@@ -120,7 +120,7 @@ def get_map_str(map_cell, player) -> str:
                 map_str += "⬛"
             elif (x, y) == player:
                 map_str += "🔴"
-            elif (x, y) == (random.choice(range(15)), random.choice(range(15))):
+            elif (x, y) == (14, 14):
                 map_str += "🔲"
             else:
                 map_str += "⬜"

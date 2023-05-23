@@ -3,7 +3,7 @@ from aiogram.types import Message
 from config_data import load_config, Config
 
 
-users_data: dict[int, dict[str, str | int | list | dict | bool | Message | None]] = {}
+users_data = {}
 user_id_premium: list = []
 
 

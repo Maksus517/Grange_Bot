@@ -198,25 +198,129 @@ async def process_maze_game_press_button(callback: CallbackQuery):
     )
 
 
-@router_ar_gm.callback_query(FilterMazeGame(users_data))
-async def process_maze_game_action_answer(callback: CallbackQuery):
-    if callback.data == 'left':
-        users_data[callback.from_user.id]['games_data']['maze_game']['x'] -= 1
-    if callback.data == 'right':
+@router_ar_gm.callback_query(Text(text=['left']), FilterMazeGame(users_data))
+async def process_maze_game_left_action_answer(callback: CallbackQuery):
+    users_data[callback.from_user.id]['games_data']['maze_game']['x'] -= 1
+    if users_data[callback.from_user.id]['games_data']['maze_game']['x'] < 0 or\
+        users_data[callback.from_user.id]['games_data']['maze_game']['map'][
+            users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+            users_data[callback.from_user.id]['games_data']['maze_game']['y'] * 15] is True:
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
         users_data[callback.from_user.id]['games_data']['maze_game']['x'] += 1
-    if callback.data == 'up':
-        users_data[callback.from_user.id]['games_data']['maze_game']['y'] -= 1
-    if callback.data == 'down':
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+
+
+@router_ar_gm.callback_query(Text(text=['right']), FilterMazeGame(users_data))
+async def process_maze_game_right_action_answer(callback: CallbackQuery):
+    users_data[callback.from_user.id]['games_data']['maze_game']['x'] += 1
+    if (users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+            users_data[callback.from_user.id]['games_data']['maze_game']['y']) == 16:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(text="Вы выиграли")
+    elif users_data[callback.from_user.id]['games_data']['maze_game']['x'] > 14 or\
+            users_data[callback.from_user.id]['games_data']['maze_game']['map'][
+                users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+                users_data[callback.from_user.id]['games_data']['maze_game']['y'] * 15] is True:
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+        users_data[callback.from_user.id]['games_data']['maze_game']['x'] -= 1
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+
+
+@router_ar_gm.callback_query(Text(text=['up']), FilterMazeGame(users_data))
+async def process_maze_game_up_action_answer(callback: CallbackQuery):
+    users_data[callback.from_user.id]['games_data']['maze_game']['y'] -= 1
+    if users_data[callback.from_user.id]['games_data']['maze_game']['y'] < 0 or\
+            users_data[callback.from_user.id]['games_data']['maze_game']['map'][
+                users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+                users_data[callback.from_user.id]['games_data']['maze_game']['y'] * 15] is True:
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
         users_data[callback.from_user.id]['games_data']['maze_game']['y'] += 1
-    #
-    # if users_data[callback.from_user.id]['games_data']['maze_game']['x'] < 0 or \
-    #         users_data[callback.from_user.id]['games_data']['maze_game']['x'] \
-    #         > 2 * users_data[callback.from_user.id]['data_list'][1] - 2 or \
-    #         users_data[callback.from_user.id]['games_data']['maze_game']['y'] < 0 or \
-    #         users_data[callback.from_user.id]['games_data']['maze_game']['y'] > \
-    #         users_data[callback.from_user.id]['data_list'][0] * 2 - 2:
-    #     return None
-    #
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+
+
+@router_ar_gm.callback_query(Text(text=['down']), FilterMazeGame(users_data))
+async def process_maze_game_down_action_answer(callback: CallbackQuery):
+    users_data[callback.from_user.id]['games_data']['maze_game']['y'] += 1
+    if (users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+            users_data[callback.from_user.id]['games_data']['maze_game']['y']) == 16:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(text="Вы выиграли")
+    elif users_data[callback.from_user.id]['games_data']['maze_game']['x'] > 14 or\
+            users_data[callback.from_user.id]['games_data']['maze_game']['map'][
+                users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
+                users_data[callback.from_user.id]['games_data']['maze_game']['y'] * 15] is True:
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+        users_data[callback.from_user.id]['games_data']['maze_game']['y'] -= 1
+        await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+    else:
+        users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+            text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+                             (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+                              users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+            reply_markup=maze_game_keyboard
+        )
+
+
+        # 0 14
     # if users_data[callback.from_user.id]['games_data']['maze_game']['map'][
     #    users_data[callback.from_user.id]['games_data']['maze_game']['x'] +
     #    users_data[callback.from_user.id]['games_data']['maze_game']['y'] *
@@ -229,9 +333,9 @@ async def process_maze_game_action_answer(callback: CallbackQuery):
     #         users_data[callback.from_user.id]['data_list'][0] * 2 - 2:
     #     await callback.message.edit_text(text="Вы выиграли")
     # else:
-    await callback.message.edit_text(
-        text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
-                         (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
-                          users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
-        reply_markup=maze_game_keyboard
-    )
+    # await callback.message.edit_text(
+    #     text=get_map_str(users_data[callback.from_user.id]['games_data']['maze_game']['map'],
+    #                      (users_data[callback.from_user.id]['games_data']['maze_game']['x'],
+    #                       users_data[callback.from_user.id]['games_data']['maze_game']['y'])),
+    #     reply_markup=maze_game_keyboard
+    # )
