@@ -37,7 +37,7 @@ LEXICON_RU: dict[str, str] = {
 
     'crypto_currencies': '📈 Курс криптовалют',
 
-    'exchange rate': '📊 Курс валют',
+    'exchange_rate': '📊 Курс валют',
 
     'news': '📺 Новости',
 
@@ -204,7 +204,12 @@ LEXICON_GUESS_NUMBER_RU: dict[str, str] = {
 }
 
 LEXICON_CRYPTO_CURRENCIES_RU: dict[str, str] = {
-    'crypro_currencies_press_button': 'Выберите криптовалюту:'
+    'crypro_currencies_press_button': 'Курс криптовалют по отношению к доллару.\n'
+                                      'Выберите криптовалюту:',
+    'currencies_press_button': 'Курс валют по отношению к рублю.\n'
+                               'Выберите валюту:',
+
+    'conversion_currencies_press_button': '🔁 Конвертировать в рубли'
 }
 
 LEXICON_MAZE_GAME_RU: dict[str, str] = {

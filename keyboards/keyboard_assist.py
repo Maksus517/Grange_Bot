@@ -1,7 +1,8 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from lexicon import (LEXICON_RU, LEXICON_LANGUAGE_SMALL_RU, LEXICON_TRANSLATOR_RU,
-                     LEXICON_LANGUAGE_RU, LEXICON_CRIPTO_RU)
+                     LEXICON_LANGUAGE_RU, LEXICON_CRIPTO_RU, LEXICON_CURRENCIES_RU,
+                     LEXICON_CRYPTO_CURRENCIES_RU)
 
 
 # -----Support_keyboard-----
@@ -15,8 +16,8 @@ button_translator: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['
 button_calculator: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['calculator'],
                                                                callback_data='calculator')
 
-button_crypto_currencies: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['crypto_currencies'],
-                                                                      callback_data='crypto_currencies')
+button_crypto_currencies: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['exchange_rate'],
+                                                                      callback_data='exchange_rate')
 
 button_no: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_no_info'],
                                                        callback_data='button_no_info')
@@ -148,7 +149,44 @@ def crypto_currencies_keyboard() -> InlineKeyboardMarkup:
                                  callback_data=callback_data)
         )
     crypto_keyboard.row(*buttons_crypto, width=4)
-    crypto_keyboard.row(
-                       InlineKeyboardButton(text=LEXICON_RU['button_back'],
-                                            callback_data='button_no_message_mp3'))
+    crypto_keyboard.row(InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                             callback_data='button_no_message_mp3'),
+                        InlineKeyboardButton(text=LEXICON_RU['exchange_rate'],
+                                             callback_data='exchange_rate'))
     return crypto_keyboard.as_markup()
+
+
+def crypto_currencies_keyboard_2() -> InlineKeyboardMarkup:
+    crypto_keyboard: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    buttons_crypto: list[InlineKeyboardButton] = []
+
+    for callback_data, name in LEXICON_CRIPTO_RU.items():
+        buttons_crypto.append(
+            InlineKeyboardButton(text=name,
+                                 callback_data=callback_data)
+        )
+    crypto_keyboard.row(*buttons_crypto, width=4)
+    crypto_keyboard.row(InlineKeyboardButton(text=LEXICON_CRYPTO_CURRENCIES_RU['conversion_currencies_press_button'],
+                                             callback_data='conversion_currencies'))
+    crypto_keyboard.row(InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                             callback_data='button_no_message_mp3'),
+                        InlineKeyboardButton(text=LEXICON_RU['exchange_rate'],
+                                             callback_data='exchange_rate'))
+    return crypto_keyboard.as_markup()
+
+
+def cbrf_currencies_keyboard() -> InlineKeyboardMarkup:
+    cbrf_keyboard: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    buttons_cbrf: list[InlineKeyboardButton] = []
+
+    for callback_data, name in LEXICON_CURRENCIES_RU.items():
+        buttons_cbrf.append(
+            InlineKeyboardButton(text=name,
+                                 callback_data=callback_data)
+        )
+    cbrf_keyboard.row(*buttons_cbrf, width=2)
+    cbrf_keyboard.row(InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                           callback_data='button_no_message_mp3'),
+                      InlineKeyboardButton(text=LEXICON_RU['crypto_currencies'],
+                                           callback_data='crypto_currencies'))
+    return cbrf_keyboard.as_markup()

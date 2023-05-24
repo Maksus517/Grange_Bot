@@ -6,4 +6,4 @@ from .info_news import *
 from .info_joke import *
 from .assist_translator import *
 from .games_arcade import *
-from .assist_crypto_currencies import *
+from .assist_currencies import *

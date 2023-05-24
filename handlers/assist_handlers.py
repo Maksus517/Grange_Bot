@@ -6,11 +6,12 @@ import os
 from lexicon import LEXICON_RU, LEXICON_TRANSLATOR_RU, LEXICON_CRYPTO_CURRENCIES_RU
 from data import users_data
 from filters import (FilterMessageMp3, FilterLanguageChoiceOne, FilterLanguageChoiceTwo,
-                     FilterTranslator, FilterCalculatorAssist, FilterCryptoCurrenciesAssist)
-from services import message_to_mp3, text_translator, get_ticker
+                     FilterTranslator, FilterCalculatorAssist, FilterCryptoCurrenciesAssist, FilterCurrenciesAssist)
+from services import message_to_mp3, text_translator, get_ticker, get_rates_cbrf, convert_usd_to_rub
 from keyboards import (assist_user_keyboard, assist_assist_user_keyboard, send_mp3_keyboard,
                        choice_language_small_keyboard, choice_language_keyboard, again_translator_press_button,
-                       calculator_keyboard, crypto_currencies_keyboard)
+                       calculator_keyboard, crypto_currencies_keyboard, cbrf_currencies_keyboard,
+                       crypto_currencies_keyboard_2)
 
 
 router_sh = Router()
@@ -266,7 +267,16 @@ async def process_calculator_data_append(callback: CallbackQuery) -> None:
             )
 
 
-# Cripto currencies
+# exchange_rate
+
+@router_sh.callback_query(Text(text=['exchange_rate']))
+async def process_currencies_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'currencies'
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=LEXICON_CRYPTO_CURRENCIES_RU['currencies_press_button'],
+        reply_markup=cbrf_currencies_keyboard()
+    )
+
 
 @router_sh.callback_query(Text(text=['crypto_currencies']))
 async def process_crypro_currencies_press_button(callback: CallbackQuery) -> None:
@@ -277,9 +287,25 @@ async def process_crypro_currencies_press_button(callback: CallbackQuery) -> Non
     )
 
 
+@router_sh.callback_query(Text(text=['conversion_currencies']))
+async def process_crypro_conversion_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=convert_usd_to_rub(users_data[callback.from_user.id]['message_data'].text),
+        reply_markup=crypto_currencies_keyboard()
+    )
+
+
 @router_sh.callback_query(FilterCryptoCurrenciesAssist(users_data))
 async def process_crypro_currencies_press_button(callback: CallbackQuery) -> None:
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=get_ticker(callback.data),
-        reply_markup=crypto_currencies_keyboard()
+        reply_markup=crypto_currencies_keyboard_2()
+    )
+
+
+@router_sh.callback_query(FilterCurrenciesAssist(users_data))
+async def process_crypro_currencies_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=get_rates_cbrf(callback.data),
+        reply_markup=cbrf_currencies_keyboard()
     )
