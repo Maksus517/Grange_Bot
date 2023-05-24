@@ -209,7 +209,7 @@ LEXICON_CRYPTO_CURRENCIES_RU: dict[str, str] = {
     'currencies_press_button': 'Курс валют по отношению к рублю.\n'
                                'Выберите валюту:',
 
-    'conversion_currencies_press_button': '🔁 Конвертировать в рубли'
+    'conversion_currencies_press_button': '🔁 Конвертировать в рубли по курсу ЦБ РФ'
 }
 
 LEXICON_MAZE_GAME_RU: dict[str, str] = {
