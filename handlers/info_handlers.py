@@ -159,6 +159,7 @@ async def process_news_press_button(callback: CallbackQuery) -> None:
 
 @router_ih.callback_query(Text(text=['smi_news', 'smi_news_back_news']))
 async def process_smi_news_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'news'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_NEWS_RU['process_world_news_press_button'],
         reply_markup=smi_news_keyboard
@@ -167,6 +168,7 @@ async def process_smi_news_press_button(callback: CallbackQuery) -> None:
 
 @router_ih.callback_query(Text(text=['cyber_sport_news', 'cyber_news_back_news']))
 async def process_cyber_sport_news_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['user_status'] = 'news'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_NEWS_RU['process_cyber_sport_news_press_button'],
         reply_markup=cyber_sport_news_keyboard
