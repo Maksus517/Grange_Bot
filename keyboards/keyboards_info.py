@@ -99,6 +99,61 @@ open_weather_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
 
 # -----News keyboard-----
 
+button_world_news: InlineKeyboardButton = InlineKeyboardButton(text='📰 СМИ',
+                                                               callback_data='smi_news')
+
+button_cyber_sport_news: InlineKeyboardButton = InlineKeyboardButton(text='💻 Киберспорт',
+                                                                     callback_data='cyber_sport_news')
+
+news_choice_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_world_news,
+                                                                                   button_cyber_sport_news],
+                                                                                   [button_no, button_back]])
+
+# smi news
+
+button_ria_politics_news: InlineKeyboardButton = InlineKeyboardButton(text='🖋 Политика',
+                                                                      callback_data='ria_politics_news')
+
+button_ria_world_news: InlineKeyboardButton = InlineKeyboardButton(text='🌍 В мире',
+                                                                   callback_data='ria_world_news')
+
+button_ria_economy_news: InlineKeyboardButton = InlineKeyboardButton(text='💰 Экономика',
+                                                                     callback_data='ria_economy_news')
+
+button_ria_society_news: InlineKeyboardButton = InlineKeyboardButton(text='👩‍👩‍👦‍👦 Общество',
+                                                                     callback_data='ria_society_news')
+
+button_ria_incidents_news: InlineKeyboardButton = InlineKeyboardButton(text='💥 Происшествия',
+                                                                       callback_data='ria_incidents_news')
+
+button_ria_defense_safety_news: InlineKeyboardButton = InlineKeyboardButton(text='👮‍♀️ Безопасность',
+                                                                            callback_data='ria_defense_safety_news')
+
+button_ria_back_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                                  callback_data='ria_back_news')
+#
+# button_ria_sport_news: InlineKeyboardButton = InlineKeyboardButton(text='Спорт',
+#                                                                    callback_data='ria_sport_news')
+
+smi_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_ria_politics_news,
+                                                                                 button_ria_world_news,
+                                                                                 button_ria_economy_news],
+                                                                                [button_ria_society_news,
+                                                                                 button_ria_incidents_news,
+                                                                                 button_ria_defense_safety_news],
+                                                                                [button_no, button_ria_back_news]])
+
+
+# cyber_sport_news
+
+button_dota_news: InlineKeyboardButton = InlineKeyboardButton(text='🕹 Дота 2',
+                                                              callback_data='dota_news')
+
+cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news]])
+
+
+# news actions
+
 button_news_next: InlineKeyboardButton = InlineKeyboardButton(text='Следующая ➡️',
                                                               callback_data='button_news_next')
 button_news_prev: InlineKeyboardButton = InlineKeyboardButton(text='⬅️ Предыдущая',
@@ -107,21 +162,24 @@ button_news_prev: InlineKeyboardButton = InlineKeyboardButton(text='⬅️ Пр�
 button_leave_here_news: InlineKeyboardButton = InlineKeyboardButton(text='📌 Закрепить',
                                                                     callback_data='button_leave_here_news')
 
+button_back_smi_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                                  callback_data='smi_news_back_news')
+
 news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_news_next],
-                     [button_leave_here_news, button_back],
+                     [button_leave_here_news, button_back_smi_news],
                      [button_no]]
 )
 
 news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_news_prev, button_news_next],
-                     [button_leave_here_news, button_back],
+                     [button_leave_here_news, button_back_smi_news],
                      [button_no]]
 )
 
 news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_news_prev],
-                     [button_leave_here_news, button_back],
+                     [button_leave_here_news, button_back_smi_news],
                      [button_no]]
 )
 

@@ -215,3 +215,11 @@ LEXICON_CRYPTO_CURRENCIES_RU: dict[str, str] = {
 LEXICON_MAZE_GAME_RU: dict[str, str] = {
     'maze_win': 'Поздравляю, вы выиграли! Сыграем еще?'
 }
+
+LEXICON_NEWS_RU: dict[str, str] = {
+    'process_news_press_button': 'Какие новости будем смотреть?',
+
+    'process_world_news_press_button': 'Средства массовой информации',
+
+    'process_cyber_sport_news_press_button': 'Выберите дисциплину:'
+}
