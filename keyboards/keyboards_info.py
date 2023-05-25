@@ -150,7 +150,8 @@ button_dota_news: InlineKeyboardButton = InlineKeyboardButton(text='🕹 Дот�
                                                               callback_data='dota_news')
 
 cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news],
-                                                                                        [button_ria_back_news]])
+                                                                                        [button_no,
+                                                                                         button_ria_back_news]])
 
 
 # news actions
