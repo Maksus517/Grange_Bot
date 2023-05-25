@@ -149,7 +149,8 @@ smi_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
 button_dota_news: InlineKeyboardButton = InlineKeyboardButton(text='🕹 Дота 2',
                                                               callback_data='dota_news')
 
-cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news]])
+cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news],
+                                                                                        [button_ria_back_news]])
 
 
 # news actions
@@ -164,6 +165,9 @@ button_leave_here_news: InlineKeyboardButton = InlineKeyboardButton(text='📌 �
 
 button_back_smi_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                                   callback_data='smi_news_back_news')
+
+button_back_cyber_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
+                                                                    callback_data='cyber_news_back_news')
 
 news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_news_next],
@@ -180,6 +184,24 @@ news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
 news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[button_news_prev],
                      [button_leave_here_news, button_back_smi_news],
+                     [button_no]]
+)
+
+cyber_news_press_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_next],
+                     [button_leave_here_news, button_back_cyber_news],
+                     [button_no]]
+)
+
+cyber_news_next_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_prev, button_news_next],
+                     [button_leave_here_news, button_back_cyber_news],
+                     [button_no]]
+)
+
+cyber_news_prev_button_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[button_news_prev],
+                     [button_leave_here_news, button_back_cyber_news],
                      [button_no]]
 )
 
