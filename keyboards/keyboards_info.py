@@ -112,22 +112,22 @@ news_choice_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboar
 # smi news
 
 button_ria_politics_news: InlineKeyboardButton = InlineKeyboardButton(text='🖋 Политика',
-                                                                      callback_data='ria_politics_news')
+                                                                      callback_data='politics/')
 
 button_ria_world_news: InlineKeyboardButton = InlineKeyboardButton(text='🌍 В мире',
-                                                                   callback_data='ria_world_news')
+                                                                   callback_data='world/')
 
 button_ria_economy_news: InlineKeyboardButton = InlineKeyboardButton(text='💰 Экономика',
-                                                                     callback_data='ria_economy_news')
+                                                                     callback_data='economy/')
 
 button_ria_society_news: InlineKeyboardButton = InlineKeyboardButton(text='👩‍👩‍👦‍👦 Общество',
-                                                                     callback_data='ria_society_news')
+                                                                     callback_data='society/')
 
 button_ria_incidents_news: InlineKeyboardButton = InlineKeyboardButton(text='💥 Происшествия',
-                                                                       callback_data='ria_incidents_news')
+                                                                       callback_data='incidents/')
 
 button_ria_defense_safety_news: InlineKeyboardButton = InlineKeyboardButton(text='👮‍♀️ Безопасность',
-                                                                            callback_data='ria_defense_safety_news')
+                                                                            callback_data='defense_safety/')
 
 button_ria_back_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                                   callback_data='ria_back_news')

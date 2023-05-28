@@ -3,8 +3,7 @@ from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
 from lexicon import LEXICON_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU, LEXICON_INFO_RU, LEXICON_NEWS_RU
-from services import (get_wiki, get_weather, ria_politics_news, ria_world_news, ria_economy_news, ria_society_news,
-                      ria_incidents_news, ria_defense_safety_news, joke_pars, cyber_sport_dota_news)
+from services import (get_wiki, get_weather, ria_news, joke_pars, cyber_sport_dota_news)
 from data import users_data
 from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError, FilterRiaNews, FilterCyberSport
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
@@ -159,7 +158,7 @@ async def process_news_press_button(callback: CallbackQuery) -> None:
 
 @router_ih.callback_query(Text(text=['smi_news', 'smi_news_back_news']))
 async def process_smi_news_press_button(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['user_status'] = 'news'
+    users_data[callback.from_user.id]['user_status'] = 'ria_news'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_NEWS_RU['process_world_news_press_button'],
         reply_markup=smi_news_keyboard
@@ -168,7 +167,7 @@ async def process_smi_news_press_button(callback: CallbackQuery) -> None:
 
 @router_ih.callback_query(Text(text=['cyber_sport_news', 'cyber_news_back_news']))
 async def process_cyber_sport_news_press_button(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['user_status'] = 'news'
+    users_data[callback.from_user.id]['user_status'] = 'cyber_sport_news'
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=LEXICON_NEWS_RU['process_cyber_sport_news_press_button'],
         reply_markup=cyber_sport_news_keyboard
@@ -285,32 +284,9 @@ async def process_news_press_leave_here_button(callback: CallbackQuery) -> None:
         )
 
 
-@router_ih.callback_query(FilterNewsError(users_data))
+@router_ih.callback_query(FilterRiaNews(users_data))
 async def process_ria_news_press_button(callback: CallbackQuery) -> None:
-    if callback.data == 'ria_politics_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_politics_news()
-    elif callback.data == 'ria_world_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_world_news()
-    elif callback.data == 'ria_economy_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_economy_news()
-    elif callback.data == 'ria_society_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_society_news()
-    elif callback.data == 'ria_incidents_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_incidents_news()
-    elif callback.data == 'ria_defense_safety_news':
-        users_data[callback.from_user.id]['user_status'] = 'ria_news'
-        users_data[callback.from_user.id]['data_list'] = await ria_defense_safety_news()
-    # elif callback.data == 'ria_sport_news':
-    #     users_data[callback.from_user.id]['data_list'] = await ria_sport_news()
-    elif callback.data == 'dota_news':
-        users_data[callback.from_user.id]['user_status'] = 'cyber_sport_news'
-        users_data[callback.from_user.id]['data_list'] = await cyber_sport_dota_news()
-
+    users_data[callback.from_user.id]['data_list'] = await ria_news(callback.data)
     users_data[callback.from_user.id]['counter'] = 0
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=users_data[callback.from_user.id]['data_list'][users_data[callback.from_user.id]['counter']],
@@ -318,7 +294,17 @@ async def process_ria_news_press_button(callback: CallbackQuery) -> None:
     )
 
 
-@router_ih.message(FilterNewsError(users_data))
+@router_ih.callback_query(FilterCyberSport(users_data))
+async def process_dota_news_press_button(callback: CallbackQuery) -> None:
+    users_data[callback.from_user.id]['data_list'] = await cyber_sport_dota_news()
+    users_data[callback.from_user.id]['counter'] = 0
+    users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
+        text=users_data[callback.from_user.id]['data_list'][users_data[callback.from_user.id]['counter']],
+        reply_markup=news_press_button_keyboard
+    )
+
+
+@router_ih.message(FilterNewsError(users_data), FilterCyberSport(users_data), FilterRiaNews(users_data))
 async def process_wiki_error_answer(message: Message) -> None:
     await users_data[message.from_user.id]['message_data'].delete()
     users_data[message.from_user.id]['user_status'] = 'chat'

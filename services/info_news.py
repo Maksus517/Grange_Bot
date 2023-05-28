@@ -14,83 +14,15 @@ async def fetch(session, url) -> str:
 
 # ria news
 
-async def ria_politics_news(url_ria: str = URL_RIA) -> list:
+async def ria_news(path: str, url_ria: str = URL_RIA) -> list:
     async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}politics/')
+        html = await fetch(session, f'{url_ria}{path}')
         soup = BS(html, 'html.parser')
         post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
         news_list = []
         for i in range(len(post)):
             news_list.append(f'{post[i]["href"]}')
         return news_list
-
-
-async def ria_world_news(url_ria: str = URL_RIA) -> list:
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}world/')
-        soup = BS(html, 'html.parser')
-        post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
-        news_list = []
-        for i in range(len(post)):
-            news_list.append(f'{post[i]["href"]}')
-        return news_list
-
-
-async def ria_economy_news(url_ria: str = URL_RIA) -> list:
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}economy/')
-        soup = BS(html, 'html.parser')
-        post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
-        news_list = []
-        for i in range(len(post)):
-            news_list.append(f'{post[i]["href"]}')
-        return news_list
-
-
-async def ria_society_news(url_ria: str = URL_RIA) -> list:
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}society/')
-        soup = BS(html, 'html.parser')
-        post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
-        news_list = []
-        for i in range(len(post)):
-            news_list.append(f'{post[i]["href"]}')
-        return news_list
-
-
-async def ria_incidents_news(url_ria: str = URL_RIA) -> list:
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}incidents/')
-        soup = BS(html, 'html.parser')
-        post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
-        news_list = []
-        for i in range(len(post)):
-            news_list.append(f'{post[i]["href"]}')
-        return news_list
-
-
-async def ria_defense_safety_news(url_ria: str = URL_RIA) -> list:
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, f'{url_ria}defense_safety/')
-        soup = BS(html, 'html.parser')
-        post = soup.find_all("a", class_="list-item__title color-font-hover-only")[0:15]
-        news_list = []
-        for i in range(len(post)):
-            news_list.append(f'{post[i]["href"]}')
-        return news_list
-
-
-# async def ria_sport_news(url_ria: str = 'https://rsport.ria.ru/') -> list:
-#     async with aiohttp.ClientSession() as session:
-#         html = await fetch(session, url_ria)
-#         soup = BS(html, 'html.parser')
-#         print(soup)
-#         post = soup.find_all("a", class_="list-item__title color-front-hover-only")
-#         print(post)
-#         news_list = []
-#         for i in range(len(post)):
-#             news_list.append(f'{post[i]["href"]}')
-#         return news_list
 
 
 # cyber sport news
