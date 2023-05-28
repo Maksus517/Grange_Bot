@@ -131,9 +131,7 @@ button_ria_defense_safety_news: InlineKeyboardButton = InlineKeyboardButton(text
 
 button_ria_back_news: InlineKeyboardButton = InlineKeyboardButton(text=LEXICON_RU['button_back'],
                                                                   callback_data='ria_back_news')
-#
-# button_ria_sport_news: InlineKeyboardButton = InlineKeyboardButton(text='Спорт',
-#                                                                    callback_data='ria_sport_news')
+
 
 smi_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_ria_politics_news,
                                                                                  button_ria_world_news,
@@ -146,10 +144,13 @@ smi_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
 
 # cyber_sport_news
 
-button_dota_news: InlineKeyboardButton = InlineKeyboardButton(text='🕹 Дота 2',
-                                                              callback_data='dota_news')
+button_dota_news: InlineKeyboardButton = InlineKeyboardButton(text='🕹 Dota-2',
+                                                              callback_data='dota-2/')
+button_cs_go_news: InlineKeyboardButton = InlineKeyboardButton(text='🔫 CS-GO',
+                                                               callback_data='cs-go/')
 
-cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news],
+cyber_sport_news_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[[button_dota_news,
+                                                                                         button_cs_go_news],
                                                                                         [button_no,
                                                                                          button_ria_back_news]])
 

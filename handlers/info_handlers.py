@@ -3,7 +3,7 @@ from aiogram.filters import Text
 from aiogram.types import Message, CallbackQuery
 
 from lexicon import LEXICON_RU, LEXICON_WIKI_RU, LEXICON_WEATHER_RU, LEXICON_JOKE_RU, LEXICON_INFO_RU, LEXICON_NEWS_RU
-from services import (get_wiki, get_weather, ria_news, joke_pars, cyber_sport_dota_news)
+from services import (get_wiki, get_weather, ria_news, joke_pars, cyber_sport_news)
 from data import users_data
 from filters import FilterWiki, FilterOpenWeather, FilterWikiError, FilterNewsError, FilterRiaNews, FilterCyberSport
 from keyboards import (info_keyboard, open_weather_keyboard, assist_keyboard, assist_joke_keyboard,
@@ -296,11 +296,11 @@ async def process_ria_news_press_button(callback: CallbackQuery) -> None:
 
 @router_ih.callback_query(FilterCyberSport(users_data))
 async def process_dota_news_press_button(callback: CallbackQuery) -> None:
-    users_data[callback.from_user.id]['data_list'] = await cyber_sport_dota_news()
+    users_data[callback.from_user.id]['data_list'] = await cyber_sport_news(callback.data)
     users_data[callback.from_user.id]['counter'] = 0
     users_data[callback.from_user.id]['message_data'] = await callback.message.edit_text(
         text=users_data[callback.from_user.id]['data_list'][users_data[callback.from_user.id]['counter']],
-        reply_markup=news_press_button_keyboard
+        reply_markup=cyber_news_press_button_keyboard
     )
 
 
